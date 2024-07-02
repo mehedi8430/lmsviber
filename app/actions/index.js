@@ -1,4 +1,4 @@
-"use server"
+'use server';
 
 import { signIn } from "@/auth";
 
@@ -14,4 +14,9 @@ export async function credentialLogin(formData) {
     } catch (error) {
         throw new Error(error);
     }
+}
+
+export async function doSocialLogin(formData) {
+    const action = formData.get("action");
+    await signIn(action, { redirectTo: "/courses" });
 }

@@ -1,15 +1,14 @@
 "use client";
 
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { MobileNav } from "@/components/mobile-nav";
-import { Logo } from "./logo";
-
-import { signOut, useSession } from "next-auth/react";
-
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
+import { Logo } from "./logo";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button, buttonVariants } from "./ui/button";
 import {
@@ -21,13 +20,23 @@ import {
 
 export function MainNav({ items, children }) {
 	const { data: session } = useSession();
+	const router = useRouter();
 
 	const [showMobileMenu, setShowMobileMenu] = useState(false);
 	const [loginSession, setLoginSession] = useState(null);
 
+	if (session?.error === "RefreshAccessTokenError") {
+		router.push("/login");
+	}
+
 	useEffect(() => {
 		setLoginSession(session);
 	}, [session]);
+
+	const handleSignOut = () => {
+		signOut();
+		router.push("/login");
+	}
 
 	return (
 		<>
@@ -54,7 +63,6 @@ export function MainNav({ items, children }) {
 						</nav>
 					) : null
 				}
-
 				{
 					showMobileMenu && items && (
 						<MobileNav items={items}>
@@ -115,10 +123,10 @@ export function MainNav({ items, children }) {
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end" className="w-56 mt-4">
 						<DropdownMenuItem className="cursor-pointer" asChild>
-							<Link href="account">Profile</Link>
+							<Link href="/account">Profile</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem className="cursor-pointer" asChild>
-							<Link href="account/enrolled-courses">
+							<Link href="/account/enrolled-courses">
 								My Courses
 							</Link>
 						</DropdownMenuItem>
@@ -128,12 +136,11 @@ export function MainNav({ items, children }) {
 						{
 							loginSession && (
 								<DropdownMenuItem className="cursor-pointer" asChild>
-									<Link
-										href="#"
-										onClick={() => { signOut() }}
+									<button
+										onClick={handleSignOut}
 									>
 										Logout
-									</Link>
+									</button>
 								</DropdownMenuItem>
 							)
 						}
