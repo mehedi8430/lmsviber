@@ -4,7 +4,6 @@ import { BookOpen } from "lucide-react";
 import Image from "next/image";
 
 function EnrolledCourses() {
-
 	return (
 		<div className="grid sm:grid-cols-2 gap-6">
 			<div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full">

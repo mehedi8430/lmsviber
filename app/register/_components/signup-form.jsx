@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +14,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
 
 export function SignupForm({ role }) {
   const [error, setError] = useState(null);
@@ -22,7 +22,7 @@ export function SignupForm({ role }) {
 
   const router = useRouter();
 
-  async function onSubmit(event) {
+  const onSubmit = async (event) => {
     event.preventDefault();
 
     try {
@@ -38,7 +38,7 @@ export function SignupForm({ role }) {
         setPasswordError("Passwords do not match!");
       }
 
-      const userRole = role === "student" || role === "instructor" ? role : "student";
+      const userRole = ((role === "student") || (role === "instructor")) ? role : "student";
 
       const response = await fetch("/api/register", {
         method: "POST",
@@ -55,10 +55,12 @@ export function SignupForm({ role }) {
         }),
       });
 
+      if (response?.status === 201) {
+        router.push("/login");
+      }
+
       if (response?.status === 400) {
         setEmailError("User with this Email already in exist!");
-      } else if (response?.status === 201) {
-        router.push("/login");
       }
     } catch (err) {
       console.error(err.message);

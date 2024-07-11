@@ -4,7 +4,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
-import { sendEmails } from "@/lib/emails";
 import { stripe } from "@/lib/stripe";
 import { getCourseDetails } from "@/queries/courses";
 import { enrollForCourse } from "@/queries/enrollments";
@@ -66,7 +65,8 @@ const Success = async ({ searchParams: { session_id, courseId } }) => {
       },
     ];
 
-    const emailSentResponse = await sendEmails(emailsToSend);
+    // const emailSentResponse = await sendEmails(emailsToSend);
+    // console.log(emailSentResponse);
   }
 
   return (
