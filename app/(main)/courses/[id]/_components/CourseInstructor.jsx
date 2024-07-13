@@ -1,7 +1,10 @@
 import { MessageSquare, Presentation, Star, UsersRound } from "lucide-react";
 
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { getCourseDetailsByInstructor } from "@/queries/courses";
 import Image from "next/image";
+import Link from "next/link";
 
 const CourseInstructor = async ({ course }) => {
     const instructor = course?.instructor;
@@ -30,7 +33,7 @@ const CourseInstructor = async ({ course }) => {
                         <div className="text-gray-600 font-medium mb-6">
                             {instructor?.designation}
                         </div>
-                        <ul className="list space-y-4">
+                        <ul className="list space-y-4 mb-6">
                             <li className="flex items-center space-x-3">
                                 <Presentation className="text-gray-600" />
                                 <div>{courseDetailsByInstructor?.courses} Course(s)</div>
@@ -48,6 +51,9 @@ const CourseInstructor = async ({ course }) => {
                                 <div>{courseDetailsByInstructor?.ratings} Average Rating</div>
                             </li>
                         </ul>
+                        <Link href="/inst-profile" className={cn(buttonVariants({ size: "lg" }))}>
+                            See Profile
+                        </Link>
                     </div>
                 </div>
             </div>
