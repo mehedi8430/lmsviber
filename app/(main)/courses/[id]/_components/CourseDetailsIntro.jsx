@@ -6,6 +6,7 @@ import { hasEnrollmentForCourse } from "@/queries/enrollments";
 import { getUserByEmail } from "@/queries/users";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 const CourseDetailsIntro = async ({ course }) => {
   const session = await auth();
