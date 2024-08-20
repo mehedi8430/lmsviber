@@ -1,14 +1,10 @@
-import logo from "@/assets/lws_logo.svg";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+import "./Logo.css"; // Import your CSS file
 
 export const Logo = ({ className = "" }) => {
-
   return (
-    <Image
-      className={cn("max-w-[100px]", className)}
-      src={logo}
-      alt="logo"
-    />
+    <h1 className={cn("logo", className)}>
+      edutech<span className="highlight">online</span>
+    </h1>
   );
 };

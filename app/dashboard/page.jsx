@@ -50,7 +50,6 @@ const DashboardPage = async () => {
           </CardContent>
         </Card>
       </div>
-      {/*  */}
     </div>
   );
 };

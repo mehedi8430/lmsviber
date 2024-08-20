@@ -5,6 +5,7 @@ import { Testimonial } from "@/model/testimonial-model";
 import { User } from "@/model/user-model";
 
 import { replaceMongoIdInArray, replaceMongoIdInObject } from "@/lib/convertData";
+import { groupBy } from "@/lib/groupBy";
 import dbConnect from "@/service/mongo";
 import { getEnrollmentsForCourse } from "./enrollments";
 import { getTestimonialsForCourse } from "./testimonials";
@@ -67,10 +68,14 @@ export async function getCourseDetailsByInstructor(instructorId) {
         })
     );
 
-    const groupedByCourses = Object.groupBy(enrollments.flat(), ({ course }) => course);
+    // const groupedByCourses = Object.groupBy(enrollments.flat(), ({ course }) => course);
+    const groupedByCourses = groupBy(enrollments.flat(), ({ course }) => course);
 
     const totalRevenue = courses.reduce((acc, course) => {
-        return (acc + groupedByCourses[course._id].length * course.price);
+        const enrollmentCount = groupedByCourses[course?._id]?.length || 0;
+        // console.log("Course ID:", course?._id);
+        // console.log("enrollment by course id", enrollmentCount)
+        return acc + enrollmentCount * course?.price;
     }, 0);
 
     const totalEnrollments = enrollments.reduce((acc, obj) => acc + obj.length, 0);

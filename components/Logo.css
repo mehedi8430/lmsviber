@@ -1,0 +1,42 @@
+/* Logo.css */
+.logo {
+  font-family: "Arial", sans-serif;
+  font-size: 26px;
+  font-weight: bold;
+  color: #333;
+  display: inline-block;
+  position: relative;
+  /* text-transform: uppercase; */
+  letter-spacing: 1px;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.logo .highlight {
+  color: #0070f3;
+  font-weight: bold;
+  animation: slideIn 2s ease-in-out;
+}
+
+/* Animation for the entire logo */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation for the highlighted part */
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
