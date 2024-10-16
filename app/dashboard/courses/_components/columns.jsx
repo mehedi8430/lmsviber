@@ -62,7 +62,7 @@ export const columns = [
       const active = row.getValue("active") || false;
 
       return (
-        <Badge className={cn("bg-gray-500", active && "bg-success")}>
+        <Badge className={cn("bg-gray-500", active && "bg-green-600")}>
           {active ? "Published" : "Unpublished"}
         </Badge>
       );

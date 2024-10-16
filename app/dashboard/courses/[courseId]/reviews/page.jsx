@@ -1,10 +1,7 @@
+import { getInstructorDashboardData, REVIEW_DATA } from "@/lib/dashboard-helper";
+import { getCourseDetails } from "@/queries/courses";
 import { columns } from "./_components/columns";
 import { DataTable } from "./_components/data-table";
-
-import { getCourseDetails } from "@/queries/courses";
-
-import { getInstructorDashboardData, REVIEW_DATA } from "@/lib/dashboard-helper";
-
 
 const ReviewsPage = async ({ params: { courseId } }) => {
   const course = await getCourseDetails(courseId);
