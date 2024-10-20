@@ -39,9 +39,10 @@ const InstructorProfile = () => {
           <div className="bg-white rounded-2xl p-6 shadow">
             <div className="mb-6">
               <div className="w-36 h-36 rounded-full  mb-5 mx-auto overflow-hidden">
-                <img
+                <Image
+                  fill
                   src="https://avatars.githubusercontent.com/u/3633137?v=4"
-                  alt=""
+                  alt="Instructor"
                   className="w-full h-full object-cover rounded"
                 />
               </div>
