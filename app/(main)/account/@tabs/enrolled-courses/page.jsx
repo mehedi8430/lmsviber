@@ -1,19 +1,23 @@
 //import { CourseProgress } from "@/components/course-progress";
 
-import { auth } from "@/auth";
+import { getLoggedInUser } from "@/lib/loggedin-user";
 import { getEnrollmentsForUser } from "@/queries/enrollments";
-import { getUserByEmail } from "@/queries/users";
 import { redirect } from "next/navigation";
 import EnrolledCourseCard from "../../component/enrolled-coursecard";
 
 export default async function EnrolledCourses() {
-	const session = await auth();
+	// const session = await auth();
+	const loggedinUser = await getLoggedInUser();
 
-	if (!session?.user) {
+	// if (!session?.user) {
+	// 	redirect("/login");
+	// }
+
+	if (!loggedInUser) {
 		redirect("/login");
 	}
 
-	const loggedInUser = await getUserByEmail(session?.user?.email);
+	// const loggedInUser = await getUserByEmail(session?.user?.email);
 	const enrollments = await getEnrollmentsForUser(loggedInUser?.id);
 
 	return (

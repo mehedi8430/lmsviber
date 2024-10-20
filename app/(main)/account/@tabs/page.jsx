@@ -1,13 +1,13 @@
+import { getLoggedInUser } from "@/lib/loggedin-user";
 import ChangePassword from "../component/change-password";
 import ContactInfo from "../component/contact-info";
 import PersonalDetails from "../component/personal-details";
 
-import { auth } from "@/auth";
-import { getUserByEmail } from "@/queries/users";
 
 async function Profile() {
-	const session = await auth();
-	const loggedInUser = await getUserByEmail(session?.user?.email);
+	// const session = await auth();
+	// const loggedInUser = await getUserByEmail(session?.user?.email);
+	const loggedinUser = await getLoggedInUser();
 
 	return (
 		<>

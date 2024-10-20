@@ -1,13 +1,12 @@
-import { auth } from "@/auth";
-import { getUserByEmail } from "@/queries/users";
+import { getLoggedInUser } from "@/lib/loggedin-user";
 import dbConnect from "@/service/mongo";
 
 import { NextResponse } from "next/server";
 
 export const GET = async (request) => {
-    const session = await auth();
+    const loggedinUser = await getLoggedInUser();
 
-    if (!session?.user) {
+    if (!loggedinUser) {
         return new NextResponse(`You are not authenticated!`, {
             status: 401,
         });
@@ -16,9 +15,7 @@ export const GET = async (request) => {
     await dbConnect();
 
     try {
-        const user = await getUserByEmail(session?.user?.email);
-
-        return new NextResponse(JSON.stringify(user), {
+        return new NextResponse(JSON.stringify(loggedinUser), {
             status: 200,
         });
 

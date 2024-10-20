@@ -3,25 +3,23 @@ import { CircleCheck } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { auth } from "@/auth";
+import { getLoggedInUser } from "@/lib/loggedin-user";
 import { stripe } from "@/lib/stripe";
 import { getCourseDetails } from "@/queries/courses";
 import { enrollForCourse } from "@/queries/enrollments";
-import { getUserByEmail } from "@/queries/users";
 
 // http://localhost:3000/enroll-success?session_id=cs_test_a17tWnorUinzTC90mQ4C84zexfofggqqYFOEoqT5uUjji7zUm1Pgu6zz2g&courseId=664aca881387e2ad2e8be484
 
 const Success = async ({ searchParams: { session_id, courseId } }) => {
   if (!session_id) throw new Error("Please provide a valid session id that starts with cs_");
 
-  const userSession = await auth();
+  const loggedinUser = await getLoggedInUser();
 
-  if (!userSession?.user?.email) {
+  if (!loggedInUser) {
     redirect("/login");
   }
 
   const course = await getCourseDetails(courseId);
-  const loggedInUser = await getUserByEmail(userSession?.user?.email);
 
   const checkoutSession = await stripe.checkout.sessions.retrieve(session_id, {
     expand: ["line_items", "payment_intent"],

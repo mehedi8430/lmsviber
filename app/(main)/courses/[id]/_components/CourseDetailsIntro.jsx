@@ -1,19 +1,16 @@
-import { auth } from "@/auth";
 import { EnrollCourse } from "@/components/enroll-course";
 import { buttonVariants } from "@/components/ui/button";
+import { getLoggedInUser } from "@/lib/loggedin-user";
 import { cn } from "@/lib/utils";
 import { hasEnrollmentForCourse } from "@/queries/enrollments";
-import { getUserByEmail } from "@/queries/users";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 const CourseDetailsIntro = async ({ course }) => {
-  const session = await auth();
+  const loggedinUser = await getLoggedInUser();
 
-  if (!session?.user) redirect("/login");
-
-  const loggedInUser = await getUserByEmail(session?.user?.email);
+  if (!loggedInUser) redirect("/login");
 
   const hasEnrollment = await hasEnrollmentForCourse(course?.id, loggedInUser?.id);
 

@@ -1,18 +1,15 @@
 import Image from "next/image";
 import Menu from "./account-menu";
 
-import { auth } from "@/auth";
-import { getUserByEmail } from "@/queries/users";
+import { getLoggedInUser } from "@/lib/loggedin-user";
 import { redirect } from "next/navigation";
 
 const AccountSidebar = async () => {
-  const session = await auth();
+  const loggedinUser = await getLoggedInUser();
 
-  if (!session?.user) {
+  if (!loggedInUser) {
     redirect("/login");
   }
-
-  const loggedInUser = await getUserByEmail(session?.user?.email);
 
   return (
     <div className="lg:w-1/4 md:px-3">
