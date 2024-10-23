@@ -1,9 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,9 +10,15 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import * as z from "zod";
+
+import { updateCourse } from "@/app/actions/course";
 
 const formSchema = z.object({
   description: z.string().min(1, {
@@ -41,6 +43,7 @@ export const DescriptionForm = ({ initialData, courseId }) => {
 
   const onSubmit = async (values) => {
     try {
+      await updateCourse(courseId, values);
       toast.success("Course updated");
       toggleEdit();
       router.refresh();
@@ -64,6 +67,7 @@ export const DescriptionForm = ({ initialData, courseId }) => {
           )}
         </Button>
       </div>
+
       {!isEditing && (
         <p
           className={cn(
@@ -74,6 +78,7 @@ export const DescriptionForm = ({ initialData, courseId }) => {
           {initialData.description || "No description"}
         </p>
       )}
+
       {isEditing && (
         <Form {...form}>
           <form
@@ -96,6 +101,7 @@ export const DescriptionForm = ({ initialData, courseId }) => {
                 </FormItem>
               )}
             />
+
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
                 Save

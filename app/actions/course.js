@@ -1,9 +1,9 @@
 "use server"
 
 import { getLoggedInUser } from "@/lib/loggedin-user";
-import { create } from "@/queries/courses";
-
 import { Course } from "@/model/course-model";
+import { create } from "@/queries/courses";
+import dbConnect from "@/service/mongo";
 
 export async function createCourse(data) {
     try{
@@ -18,6 +18,8 @@ export async function createCourse(data) {
 }
 
 export async function updateCourse(courseId, dataToUpdate) {
+    await dbConnect();
+
     try {
         await Course.findByIdAndUpdate(courseId, dataToUpdate);
     } catch(e){

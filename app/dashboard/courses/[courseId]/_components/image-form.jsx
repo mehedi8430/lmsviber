@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-// import axios from "axios";
 import { ImageIcon, Pencil, PlusCircle } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -19,8 +18,39 @@ const formSchema = z.object({
 });
 
 export const ImageForm = ({ initialData, courseId }) => {
+  const [file, setFile] = useState(null);
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    if (file) {
+      async function uploadFile() {
+        try {
+          const formData = new FormData();
+          formData.append("files", file[0]);
+          formData.append("destination", "./public/assets/images/courses");
+          formData.append("courseId", courseId);
+
+          const response = await fetch("/api/upload", {
+            method: "POST",
+            body: formData
+          });
+          const result = await response.text();
+
+          if (response.status === 200) {
+            initialData.imageUrl = `/assets/images/courses/${file[0].path}`;
+            toast.success(result);
+            toggleEdit();
+            router.refresh();
+          }
+        } catch (e) {
+          toast.error(e.message);
+        }
+      }
+
+      uploadFile();
+    }
+  }, [file]);
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
@@ -54,7 +84,9 @@ export const ImageForm = ({ initialData, courseId }) => {
           )}
         </Button>
       </div>
-      {!isEditing &&
+
+      {
+        !isEditing &&
         (!initialData.imageUrl ? (
           <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
             <ImageIcon className="h-10 w-10 text-slate-500" />
@@ -68,15 +100,20 @@ export const ImageForm = ({ initialData, courseId }) => {
               src={initialData.imageUrl}
             />
           </div>
-        ))}
-      {isEditing && (
-        <div>
-          <UploadDropzone />
-          <div className="text-xs text-muted-foreground mt-4">
-            16:9 aspect ratio recommended
+        ))
+      }
+
+      {
+        isEditing && (
+          <div>
+            <UploadDropzone onUpload={(file) => setFile(file)} />
+
+            <div className="text-xs text-muted-foreground mt-4">
+              16:9 aspect ratio recommended
+            </div>
           </div>
-        </div>
-      )}
+        )
+      }
     </div>
   );
 };

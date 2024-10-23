@@ -12,9 +12,25 @@ import { ImageForm } from "./_components/image-form";
 import { ModulesForm } from "./_components/module-form";
 import { PriceForm } from "./_components/price-form";
 import { QuizSetForm } from "./_components/quiz-set-form";
+
+import { getCategories } from "@/queries/categories";
+import { getCourseDetails } from "@/queries/courses";
 import { TitleForm } from "./_components/title-form";
 
-const EditCourse = () => {
+const EditCourse = async ({ params: { courseId } }) => {
+  const course = await getCourseDetails(courseId);
+  const categories = await getCategories();
+
+  const mappedCategories = categories.map(c => {
+    return {
+      value: c.title,
+      label: c.title,
+      id: c.id,
+    }
+  });
+
+  console.log(course.thumbnail)
+
   return (
     <>
       <AlertBanner
@@ -31,17 +47,15 @@ const EditCourse = () => {
               <IconBadge icon={LayoutDashboard} />
               <h2 className="text-xl">Customize your course</h2>
             </div>
-            <TitleForm
-              initialData={{
-                title: "Reactive Accelerator",
-              }}
-              courseId={1}
-            />
-            <DescriptionForm initialData={{}} courseId={1} />
-            <ImageForm initialData={{}} courseId={1} />
-            <CategoryForm initialData={{}} courseId={1} />
+            <TitleForm initialData={{ title: course?.title, }} courseId={courseId} />
 
-            <QuizSetForm initialData={{}} courseId={1} />
+            <DescriptionForm initialData={{ description: course?.description }} courseId={courseId} />
+
+            <ImageForm initialData={{ imageUrl: `/assets/images/courses/${course.thumbnail}` }} courseId={courseId} />
+
+            <CategoryForm initialData={{ value: course?.category?.title }} courseId={courseId} options={mappedCategories} />
+
+            <QuizSetForm initialData={{}} courseId={courseId} />
           </div>
           <div className="space-y-6">
             <div>
@@ -57,7 +71,8 @@ const EditCourse = () => {
                 <IconBadge icon={CircleDollarSign} />
                 <h2 className="text-xl">Sell you course</h2>
               </div>
-              <PriceForm initialData={{}} courseId={1} />
+
+              <PriceForm initialData={{ price: course?.price }} courseId={courseId} />
             </div>
           </div>
         </div>
@@ -65,4 +80,5 @@ const EditCourse = () => {
     </>
   );
 };
+
 export default EditCourse;

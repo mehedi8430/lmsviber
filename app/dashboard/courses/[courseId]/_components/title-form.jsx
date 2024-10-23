@@ -1,10 +1,11 @@
 "use client";
 
-import * as z from "zod";
-// import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import * as z from "zod";
 
+import { updateCourse } from "@/app/actions/course";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,10 +14,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -39,10 +40,10 @@ export const TitleForm = ({ initialData = {}, courseId }) => {
 
   const onSubmit = async (values) => {
     try {
-      //   await axios.patch(`/api/courses/${courseId}`, values);
-
+      await updateCourse(courseId, values);
       toggleEdit();
       router.refresh();
+      toast.success("Course title has been updated.");
     } catch (error) {
       toast.error("Something went wrong");
     }
@@ -63,7 +64,9 @@ export const TitleForm = ({ initialData = {}, courseId }) => {
           )}
         </Button>
       </div>
+
       {!isEditing && <p className="text-sm mt-2">{initialData.title}</p>}
+
       {isEditing && (
         <Form {...form}>
           <form
@@ -86,6 +89,7 @@ export const TitleForm = ({ initialData = {}, courseId }) => {
                 </FormItem>
               )}
             />
+
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
                 Save
