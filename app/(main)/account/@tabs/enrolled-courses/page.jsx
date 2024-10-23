@@ -6,18 +6,12 @@ import { redirect } from "next/navigation";
 import EnrolledCourseCard from "../../component/enrolled-coursecard";
 
 export default async function EnrolledCourses() {
-	// const session = await auth();
-	const loggedinUser = await getLoggedInUser();
-
-	// if (!session?.user) {
-	// 	redirect("/login");
-	// }
+	const loggedInUser = await getLoggedInUser();
 
 	if (!loggedInUser) {
 		redirect("/login");
 	}
 
-	// const loggedInUser = await getUserByEmail(session?.user?.email);
 	const enrollments = await getEnrollmentsForUser(loggedInUser?.id);
 
 	return (

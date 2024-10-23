@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 
 export function SiteFooter({ className }) {
+
   return (
     <footer className={cn(className)}>
       <div className="container flex flex-col items-center justify-between gap-4 py-10 md:h-24 md:flex-row md:py-0">

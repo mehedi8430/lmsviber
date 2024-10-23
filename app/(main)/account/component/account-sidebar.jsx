@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 const AccountSidebar = async () => {
   const loggedinUser = await getLoggedInUser();
 
-  if (!loggedInUser) {
+  if (!loggedinUser) {
     redirect("/login");
   }
 
@@ -26,10 +26,10 @@ const AccountSidebar = async () => {
             <div>
               <div className="relative size-28 mx-auto">
                 <Image
-                  src={loggedInUser?.profilePicture}
+                  src={loggedinUser?.profilePicture}
                   className="rounded-full shadow dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800"
                   id="profile-banner"
-                  alt={`${loggedInUser?.firstName} ${loggedInUser?.lastName}`}
+                  alt={`${loggedinUser?.firstName} ${loggedinUser?.lastName}`}
                   width={112}
                   height={112}
                 />
@@ -40,9 +40,9 @@ const AccountSidebar = async () => {
               </div>
               <div className="mt-4">
                 <h5 className="text-lg font-semibold">
-                  {`${loggedInUser?.firstName} ${loggedInUser?.lastName}`}
+                  {`${loggedinUser?.firstName} ${loggedinUser?.lastName}`}
                 </h5>
-                <p className="text-slate-400">{loggedInUser?.email}</p>
+                <p className="text-slate-400">{loggedinUser?.email}</p>
               </div>
             </div>
           </div>
