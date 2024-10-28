@@ -3,14 +3,12 @@ import { IconBadge } from "@/components/icon-badge";
 import {
   ArrowLeft,
   BookOpenCheck,
-  Eye,
-  LayoutDashboard,
-  Video,
+  LayoutDashboard
 } from "lucide-react";
 import Link from "next/link";
-import { ModuleTitleForm } from "./_components/module-title-form";
-import { LessonForm } from "./_components/lesson-form";
 import { CourseActions } from "../../_components/course-action";
+import { LessonForm } from "./_components/lesson-form";
+import { ModuleTitleForm } from "./_components/module-title-form";
 
 const Module = async ({ params }) => {
   return (

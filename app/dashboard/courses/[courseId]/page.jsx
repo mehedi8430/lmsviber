@@ -13,6 +13,7 @@ import { ModulesForm } from "./_components/module-form";
 import { PriceForm } from "./_components/price-form";
 import { QuizSetForm } from "./_components/quiz-set-form";
 
+import { replaceMongoIdInArray } from "@/lib/convertData";
 import { getCategories } from "@/queries/categories";
 import { getCourseDetails } from "@/queries/courses";
 import { TitleForm } from "./_components/title-form";
@@ -29,7 +30,7 @@ const EditCourse = async ({ params: { courseId } }) => {
     }
   });
 
-  console.log(course.thumbnail)
+  const modules = replaceMongoIdInArray(course?.modules).sort((a, b) => a.order - b.order);
 
   return (
     <>
@@ -64,7 +65,7 @@ const EditCourse = async ({ params: { courseId } }) => {
                 <h2 className="text-xl">Course Modules</h2>
               </div>
 
-              <ModulesForm initialData={[]} courseId={[]} />
+              <ModulesForm initialData={modules} courseId={courseId} />
             </div>
             <div>
               <div className="flex items-center gap-x-2">
