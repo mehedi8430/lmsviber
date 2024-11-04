@@ -20,22 +20,15 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { ModuleList } from "./module-list";
 
+import { createModule, reOrderModules } from "@/app/actions/module";
+import { getSlug } from "@/lib/convertData";
+
 const formSchema = z.object({
   title: z.string().min(1),
 });
-const initialModules = [
-  {
-    id: "1",
-    title: "Module 1",
-    isPublished: true,
-  },
-  {
-    id: "2",
-    title: "Module 2",
-  },
-];
+
 export const ModulesForm = ({ initialData, courseId }) => {
-  const [modules, setModules] = useState(initialModules);
+  const [modules, setModules] = useState(initialData);
   const router = useRouter();
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -53,13 +46,23 @@ export const ModulesForm = ({ initialData, courseId }) => {
 
   const onSubmit = async (values) => {
     try {
+      const formData = new FormData();
+
+      formData.append("title", values?.title);
+      formData.append("slug", getSlug(values?.title));
+      formData.append("courseId", courseId);
+      formData.append("order", modules.length);
+
+      const myModule = await createModule(formData);
+
       setModules((modules) => [
         ...modules,
         {
-          id: Date.now().toString(),
+          id: myModule?._id.toString(),
           title: values.title,
         },
       ]);
+
       toast.success("Module created");
       toggleCreating();
       router.refresh();
@@ -69,8 +72,8 @@ export const ModulesForm = ({ initialData, courseId }) => {
   };
 
   const onReorder = async (updateData) => {
-    console.log({ updateData });
     try {
+      reOrderModules(updateData);
       setIsUpdating(true);
 
       toast.success("Chapters reordered");
