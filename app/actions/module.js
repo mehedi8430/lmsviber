@@ -44,3 +44,13 @@ export async function reOrderModules(data) {
         throw new Error(e);
     }
 }
+
+export async function updateModule(moduleId, data) {
+    await dbConnect();
+
+    try {
+        await Module.findByIdAndUpdate(moduleId, data);
+    } catch (err) {
+        throw new Error(err);
+    }
+}
