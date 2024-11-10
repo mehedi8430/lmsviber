@@ -9,5 +9,6 @@ export const Preview = ({ value }) => {
     () => dynamic(() => import("react-quill"), { ssr: false }),
     []
   );
+
   return <ReactQuill theme="bubble" readOnly value={value} />;
 };

@@ -37,3 +37,13 @@ export async function reOrderLesson(data) {
         throw new Error(err);
     }
 }
+
+export async function updateLesson(lessonId, data) {
+  await dbConnect();
+
+  try {
+    await Lesson.findByIdAndUpdate(lessonId, data);
+  } catch (err) {
+    throw new Error(err);
+  }
+}

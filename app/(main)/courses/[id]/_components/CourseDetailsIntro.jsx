@@ -8,7 +8,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 const CourseDetailsIntro = async ({ course }) => {
-  const loggedinUser = await getLoggedInUser();
+  const loggedInUser = await getLoggedInUser();
 
   if (!loggedInUser) redirect("/login");
 
