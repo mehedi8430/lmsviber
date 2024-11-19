@@ -4,6 +4,7 @@ import { Lesson } from "@/model/lesson-model";
 import { Module } from "@/model/module-model";
 import { create } from "@/queries/lessons";
 import dbConnect from "@/service/mongo";
+import mongoose from "mongoose";
 
 export async function createLesson(data) {
   await dbConnect();
@@ -43,6 +44,32 @@ export async function updateLesson(lessonId, data) {
 
   try {
     await Lesson.findByIdAndUpdate(lessonId, data);
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+export async function changeLessonPublishState(lessonId) {
+  await dbConnect();
+
+  try {
+    const lesson = await Lesson.findById(lessonId);
+    const res = await Lesson.findByIdAndUpdate(lessonId, {active: !lesson.active}, {lean: true});
+    return res.active;
+  }catch (err) {
+    throw new Error(err);
+  }
+}
+
+export async function deleteLesson(lessonId, moduleId) {
+  await dbConnect();
+
+  try {
+    const myModule = await Module.findById(moduleId);
+    myModule.lessonIds.pull(new mongoose.Types.ObjectId(lessonId));
+
+    await Lesson.findByIdAndDelete(lessonId);
+    myModule.save();
   } catch (err) {
     throw new Error(err);
   }

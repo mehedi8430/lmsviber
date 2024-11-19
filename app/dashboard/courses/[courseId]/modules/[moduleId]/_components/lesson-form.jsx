@@ -105,66 +105,85 @@ export const LessonForm = ({ initialData, moduleId, courseId }) => {
       <div className="font-medium flex items-center justify-between">
         Module Lessions
         <Button variant="ghost" onClick={toggleCreating}>
-          {isCreating ? (
-            <>Cancel</>
-          ) : (
-            <>
-              <PlusCircle className="h-4 w-4 mr-2" />
-              Add a chapter
-            </>
-          )}
+          {
+            isCreating ? (
+              <>Cancel</>
+            ) : (
+              <>
+                <PlusCircle className="h-4 w-4 mr-2" />
+                Add a chapter
+              </>
+            )
+          }
         </Button>
       </div>
 
-      {isCreating && (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 mt-4"
+      {
+        isCreating && (
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-4 mt-4"
+            >
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        disabled={isSubmitting}
+                        placeholder="e.g. 'Introduction to the course...'"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button disabled={!isValid || isSubmitting} type="submit">
+                Create
+              </Button>
+            </form>
+          </Form>
+        )
+      }
+      {
+        !isCreating && (
+          <div
+            className={cn(
+              "text-sm mt-2",
+              !lessons?.length && "text-slate-500 italic"
+            )}
           >
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      placeholder="e.g. 'Introduction to the course...'"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+            {!lessons?.length && "No Lesson"}
+            <LessonList
+              onEdit={onEdit}
+              onReorder={onReorder}
+              items={lessons || []}
             />
-            <Button disabled={!isValid || isSubmitting} type="submit">
-              Create
-            </Button>
-          </form>
-        </Form>
-      )}
-      {!isCreating && (
-        <div
-          className={cn(
-            "text-sm mt-2",
-            !lessons?.length && "text-slate-500 italic"
-          )}
-        >
-          {!lessons?.length && "No Lesson"}
-          <LessonList
-            onEdit={onEdit}
-            onReorder={onReorder}
-            items={lessons || []}
-          />
-        </div>
-      )}
-      {!isCreating && (
-        <p className="text-xs text-muted-foreground mt-4">
-          Drag & Drop to reorder the lessons
-        </p>
-      )}
-      <LessonModal open={isEditing} setOpen={setIsEditing} courseId={courseId} lesson={lessonToEdit} />
+          </div>
+        )
+      }
+      {
+        !isCreating && (
+          <p className="text-xs text-muted-foreground mt-4">
+            Drag & Drop to reorder the lessons
+          </p>
+        )
+      }
+
+      {/* lesson modal */}
+      <LessonModal
+        open={isEditing}
+        setOpen={setIsEditing}
+        courseId={courseId}
+        lesson={lessonToEdit}
+        moduleId={moduleId}
+        onclose={() => {
+          window.location.reload();
+        }}
+      />
     </div>
   );
 };
