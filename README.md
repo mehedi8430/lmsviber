@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Edutech Online
+
+Edutech Online is a modern Learning Management System (LMS) built with **Next.js**. It provides an intuitive platform for educators to create, manage, and deliver courses while offering a seamless learning experience for students. This project is tailored for online education, featuring dashboards, course management, and advanced file handling capabilities.
+
+---
+
+## Features
+
+### For Educators
+
+- **Course Creation**: Create and publish detailed courses with media-rich content.
+- **Drag-and-Drop Image Upload**: Easily upload course images using an intuitive drag-and-drop interface.
+- **Dashboard Management**: Track course enrollments, monitor progress, and analyze performance.
+
+### For Students
+
+- **Personalized Dashboard**: View enrolled courses and track progress.
+- **Engaging UI**: Experience an optimized and responsive learning platform.
+
+### General Features
+
+- **Admin Panel**: Manage users, courses, and overall platform settings.
+- **Responsive Design**: Fully functional across all devices.
+- **Scalable Architecture**: Designed for handling high user traffic and large-scale courses.
+
+---
+
+## Technologies Used
+
+- **Framework**: [Next.js](https://nextjs.org/)
+- **Styling**: Tailwind CSS
+- **State Management**:
+- **Authentication**: Next-auth
+- **Database**: MongoDB
+- **Other Tools**:
+  - React Hook Form
+  - react-beautiful-dnd for drag-and-drop functionality
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Installation
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone the repository:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   git clone https://github.com/mehedi8430/edutechonline.git
+   cd edutech-online
+   ```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+   2. Clone the repository:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   ```bash
+   npm install
+   ```
 
-## Learn More
+   ### Contributing
 
-To learn more about Next.js, take a look at the following resources:
+   Contributions are welcome! If you have suggestions or feature ideas:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   1. Fork the repository.
+   2. Create a new branch for your feature.
+   3. Submit a pull request with a detailed explanation.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Contact
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Developer: Mehedi Hasan
+Portfolio: [mehedihasan.dev](https://mehedihasanrakib.vercel.app/)
+Email: mehedialhasan1999@gmail.com
+Live Link: [edutechonline](https://edutechonline.vercel.app/)

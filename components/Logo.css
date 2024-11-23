@@ -1,6 +1,6 @@
 /* Logo.css */
 .logo {
-  font-family: "Arial", sans-serif;
+  /* font-family: "Arial", sans-serif; */
   font-size: 26px;
   font-weight: bold;
   color: #333;
@@ -12,6 +12,7 @@
 }
 
 .logo .highlight {
+  font-family: var(--font-lobster), sans-serif;
   color: #0070f3;
   font-weight: bold;
   animation: slideIn 2s ease-in-out;

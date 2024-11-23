@@ -27,8 +27,6 @@ export function MainNav({ items, children }) {
 	const [loginSession, setLoginSession] = useState(null);
 	const [loggedInUser, setLoggedInUser] = useState(null);
 
-	console.log(session);
-
 	if (session?.error === "RefreshAccessTokenError") {
 		redirect("/login");
 	}
@@ -39,7 +37,6 @@ export function MainNav({ items, children }) {
 			try {
 				const response = await fetch("/api/me");
 				const data = await response.json();
-				console.log(data);
 				setLoggedInUser(data);
 			} catch (err) {
 				console.log(err);
@@ -51,66 +48,74 @@ export function MainNav({ items, children }) {
 
 	return (
 		<>
+			<Link href="/">
+				<Logo />
+			</Link>
 			<div className="flex gap-6 lg:gap-10">
-				<Link href="/">
-					<Logo />
-				</Link>
-				{items?.length ? (
-					<nav className="hidden gap-6 lg:flex">
-						{items?.map((item, index) => (
-							<Link
-								key={index}
-								href={item.disabled ? "#" : item.href}
-								className={cn(
-									"flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm"
-								)}
-							>
-								{item.title}
-							</Link>
-						))}
-					</nav>
-				) : null}
+				{
+					items?.length ? (
+						<nav className="hidden gap-6 lg:flex">
+							{
+								items?.map((item, index) => (
+									<Link
+										key={index}
+										href={item.disabled ? "#" : item.href}
+										className={cn(
+											"flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm"
+										)}
+									>
+										{item.title}
+									</Link>
+								))
+							}
+						</nav>
+					) : null
+				}
 
-				{showMobileMenu && items && (
-					<MobileNav items={items}>{children}</MobileNav>
-				)}
+				{
+					showMobileMenu && items && (
+						<MobileNav items={items}>{children}</MobileNav>
+					)
+				}
 			</div>
 			<nav className="flex items-center gap-3">
-				{!loginSession && (
-					<div className="items-center gap-3 hidden lg:flex">
-						<Link
-							href="/login"
-							className={cn(
-								buttonVariants({ size: "sm" }),
-								"px-4"
-							)}
-						>
-							Login
-						</Link>
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button variant="outline" size="sm">
-									Register
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent
-								align="end"
-								className="w-56 mt-4"
+				{
+					!loginSession && (
+						<div className="items-center gap-3 hidden lg:flex">
+							<Link
+								href="/login"
+								className={cn(
+									buttonVariants({ size: "sm" }),
+									"px-4"
+								)}
 							>
-								<DropdownMenuItem className="cursor-pointer">
-									<Link href="/register/student">
-										Student
-									</Link>
-								</DropdownMenuItem>
-								<DropdownMenuItem className="cursor-pointer">
-									<Link href="/register/instructor">
-										Instructor
-									</Link>
-								</DropdownMenuItem>
-							</DropdownMenuContent>
-						</DropdownMenu>
-					</div>
-				)}
+								Login
+							</Link>
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<Button variant="outline" size="sm">
+										Register
+									</Button>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent
+									align="end"
+									className="w-56 mt-4"
+								>
+									<DropdownMenuItem className="cursor-pointer">
+										<Link href="/register/student">
+											Student
+										</Link>
+									</DropdownMenuItem>
+									<DropdownMenuItem className="cursor-pointer">
+										<Link href="/register/instructor">
+											Instructor
+										</Link>
+									</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenu>
+						</div>
+					)
+				}
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<div className="cursor-pointer">

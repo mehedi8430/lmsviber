@@ -22,7 +22,7 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body className={cn(inter.className, poppins.className)}>
         {children}
-        <Toaster richColors position="top-center" />
+        <Toaster richColors position="top-center"/>
       </body>
     </html>
   );
