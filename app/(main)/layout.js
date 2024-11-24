@@ -4,20 +4,20 @@ import AppProvider from "@/providers/AppProvider";
 
 const navLinks = [
     {
-        title: "Features",
-        href: "/#features",
+        title: "Home",
+        href: "/",
     },
     {
-        title: "Pricing",
-        href: "/pricing",
+        title: "Courses",
+        href: "/#courses",
     },
     {
-        title: "Blog",
-        href: "/blog",
+        title: "About Us",
+        href: "/#about_us",
     },
     {
-        title: "Documentation",
-        href: "/docs",
+        title: "Our Services",
+        href: "/#services",
     },
 ];
 
