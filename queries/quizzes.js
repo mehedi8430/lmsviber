@@ -15,7 +15,8 @@ export async function getAllQuizSets(excludeUnPublished) {
         } else {
             quizSets = await Quizset.find().lean();
         }
-          return replaceMongoIdInArray(quizSets);
+
+        return replaceMongoIdInArray(quizSets);
     } catch (e) {
         throw new Error(e);
     }

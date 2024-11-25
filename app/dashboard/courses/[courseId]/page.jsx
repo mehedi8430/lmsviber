@@ -19,6 +19,8 @@ import { getCourseDetails } from "@/queries/courses";
 
 import { replaceMongoIdInArray } from "@/lib/convertData";
 
+import { getAllQuizSets } from "@/queries/quizzes";
+
 const EditCourse = async ({ params: { courseId } }) => {
   const course = await getCourseDetails(courseId);
   const categories = await getCategories();
@@ -32,6 +34,19 @@ const EditCourse = async ({ params: { courseId } }) => {
   });
 
   const modules = replaceMongoIdInArray(course?.modules).sort((a, b) => a.order - b.order);
+
+  const allQuizSets = await getAllQuizSets(true);
+
+  let mappedQuizSet = [];
+
+  if (allQuizSets && allQuizSets.length > 0) {
+    mappedQuizSet = allQuizSets.map(quizSet => {
+      return {
+        value: quizSet.id,
+        label: quizSet.title,
+      }
+    })
+  }
 
   return (
     <>
@@ -60,23 +75,14 @@ const EditCourse = async ({ params: { courseId } }) => {
               }}
               courseId={courseId}
             />
-            <DescriptionForm
-              initialData={{ description: course?.description }}
-              courseId={courseId}
-            />
-            <ImageForm
-              initialData={{ imageUrl: `/assets/images/courses/${course.thumbnail}` }}
-              courseId={courseId}
-            />
-            <CategoryForm
-              initialData={{ value: course?.category?.title }}
-              courseId={courseId}
-              options={mappedCategories}
-            />
+            <DescriptionForm initialData={{ description: course?.description }} courseId={courseId} />
+            <ImageForm initialData={{ imageUrl: `/assets/images/courses/${course.thumbnail}` }} courseId={courseId} />
+            <CategoryForm initialData={{ value: course?.category?.title }} courseId={courseId} options={mappedCategories} />
 
             <QuizSetForm
-              initialData={{}}
+              initialData={{ quizSetId: course?.quizSet?._id.toString() }}
               courseId={courseId}
+              options={mappedQuizSet}
             />
           </div>
           <div className="space-y-6">
@@ -86,20 +92,14 @@ const EditCourse = async ({ params: { courseId } }) => {
                 <h2 className="text-xl">Course Modules</h2>
               </div>
 
-              <ModulesForm
-                initialData={modules}
-                courseId={courseId}
-              />
+              <ModulesForm initialData={modules} courseId={courseId} />
             </div>
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={CircleDollarSign} />
                 <h2 className="text-xl">Sell you course</h2>
               </div>
-              <PriceForm
-                initialData={{ price: course?.price }}
-                courseId={courseId}
-              />
+              <PriceForm initialData={{ price: course?.price }} courseId={courseId} />
             </div>
           </div>
         </div>

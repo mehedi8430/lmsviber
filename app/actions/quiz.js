@@ -74,9 +74,32 @@ export async function doCreateQuizSet(data) {
 
     try {
         data['slug'] = getSlug(data.tite);
-        const craetedQuizSet = await Quizset.create(data);
-        return craetedQuizSet?._id.toString();
+        const createdQuizSet = await Quizset.create(data);
+        return createdQuizSet?._id.toString();
     } catch (e) {
         throw new Error(e);
     }
 }
+
+export async function changeQuizSetPublishState(quizSetId) {
+    await dbConnect();
+
+    try {
+      const quizSet = await Quizset.findById(quizSetId);
+      const res = await Quizset.findByIdAndUpdate(quizSetId, {active: !quizSet.active}, {lean: true});
+      
+      return res.active;
+    }catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  export async function deleteQuizSet(quizSetId) {
+    await dbConnect();
+
+    try {
+      await Quizset.findByIdAndDelete(quizSetId);
+    } catch (err) {
+      throw new Error(err);
+    }
+  }

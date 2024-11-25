@@ -36,7 +36,8 @@ export const CourseActions = ({ courseId, isActive }) => {
           } else {
             await deleteCourse(courseId);
             toast.success("The course has been deleted successfully");
-            router.push(`/dashboard/courses/`);
+            router.push(`/dashboard/courses`);
+            router.refresh();
           }
 
           break;
