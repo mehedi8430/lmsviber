@@ -69,6 +69,29 @@ export async function deleteQuiz(quizId, quizSetId) {
     }
 }
 
+export async function updateQuiz(quizId, data) {
+    await dbConnect();
+
+    try {
+        // Transform form data into database structure
+        const updatedData = {
+            title: data.title,
+            description: data.description,
+            options: [
+                { text: data.optionA.label, is_correct: data.optionA.isTrue },
+                { text: data.optionB.label, is_correct: data.optionB.isTrue },
+                { text: data.optionC.label, is_correct: data.optionC.isTrue },
+                { text: data.optionD.label, is_correct: data.optionD.isTrue },
+            ],
+        };
+
+        await Quiz.findByIdAndUpdate(quizId, updatedData);
+    } catch (e) {
+        throw new Error(e.message);
+    }
+}
+
+
 export async function doCreateQuizSet(data) {
     await dbConnect();
 

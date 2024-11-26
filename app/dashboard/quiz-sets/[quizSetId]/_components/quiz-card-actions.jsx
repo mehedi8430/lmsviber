@@ -7,16 +7,17 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export const QuizCardActions = ({ quiz, quizSetId }) => {
+export const QuizCardActions = ({ quiz, quizSetId, onEdit }) => {
     const [action, setAction] = useState(null);
     const router = useRouter();
 
     async function handleSubmit(event) {
         event.preventDefault();
+
         try {
             switch (action) {
                 case "edit-quiz": {
-                    console.log(quiz.id, quizSetId);
+                    onEdit();
                     break;
                 }
                 case "delete-quiz": {
