@@ -5,13 +5,9 @@ import { cn } from "@/lib/utils";
 import { hasEnrollmentForCourse } from "@/queries/enrollments";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 const CourseDetailsIntro = async ({ course }) => {
   const loggedInUser = await getLoggedInUser();
-
-  if (!loggedInUser) redirect("/login");
-
   const hasEnrollment = await hasEnrollmentForCourse(course?.id, loggedInUser?.id);
 
   return (
@@ -33,7 +29,10 @@ const CourseDetailsIntro = async ({ course }) => {
               <div className="mt-6 flex items-center justify-center flex-wrap gap-3">
                 {
                   hasEnrollment ? (
-                    <Link href="" className={cn(buttonVariants({ size: "lg" }))}>
+                    <Link
+                      href={`/courses/${course?.id}/lesson`}
+                      className={cn(buttonVariants({ size: "lg" }))}
+                    >
                       Access Course
                     </Link>
                   ) : (
