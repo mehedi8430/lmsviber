@@ -29,3 +29,14 @@ export async function getModule(moduleId) {
         throw new Error(e)
     }
 }
+
+export async function getModuleBySlug(moduleSlug) {
+    await dbConnect();
+
+    try {
+        const myModule = await Module.findOne({slug: moduleSlug}).lean();
+        return replaceMongoIdInObject(myModule);
+    } catch(err) {
+        throw new Error(err);
+    }
+}
