@@ -12,6 +12,7 @@ const sizeByVariant = {
 };
 
 export const CourseProgress = ({ value, variant, size }) => {
+
   return (
     <div>
       <Progress
