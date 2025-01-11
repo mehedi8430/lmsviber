@@ -12,7 +12,6 @@ export const CourseSidebar = async ({ courseId }) => {
     const loggedinUser = await getLoggedInUser();
 
     const report = await getAReport({ course: courseId, student: loggedinUser.id });
-    console.log("report", report);
 
     const totalCompletedModules = report?.totalCompletedModeules ? report?.totalCompletedModeules.length : 0;
 

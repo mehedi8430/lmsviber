@@ -19,8 +19,7 @@ async function updateReport(userId, courseId, moduleId, lessonId) {
 
 
 export async function POST(request) {
-    const { courseId, lessonId, moduleSlug, state, lastTime } =
-        await request.json();
+    const { courseId, lessonId, moduleSlug, state, lastTime } = await request.json();
 
     const lesson = await getLesson(lessonId);
     const loggedinUser = await getLoggedInUser();
@@ -71,7 +70,7 @@ export async function POST(request) {
                 watchEntry["created_at"] = Date.now();
                 await Watch.create(watchEntry);
 
-                await updateReport(loggedinUser.id, courseId, module.id, lessonId)
+                await updateReport(loggedinUser.id, courseId, myModule.id, lessonId)
             } else {
                 if (found.state === STARTED) {
                     watchEntry["modified_at"] = Date.now();
@@ -79,7 +78,7 @@ export async function POST(request) {
                         state: COMPLETED,
                     });
 
-                    await updateReport(loggedinUser.id, courseId, module.id, lessonId)
+                    await updateReport(loggedinUser.id, courseId, myModule.id, lessonId)
                 }
             }
         }

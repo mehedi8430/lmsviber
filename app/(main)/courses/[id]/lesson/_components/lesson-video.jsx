@@ -40,6 +40,7 @@ export const LessonVideo = ({ courseId, lesson, module }) => {
         setStarted(false);
       }
     }
+
     started && updateLessonWatch();
   }, [started]);
 
@@ -65,6 +66,7 @@ export const LessonVideo = ({ courseId, lesson, module }) => {
         router.refresh();
       }
     }
+
     ended && updateLessonWatch();
   }, [ended]);
 
