@@ -5,8 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export const DownloadCertificate = ({ courseId, totalProgress }) => {
-  const [isCertificateDownloading, setIsCertificateDownloading] =
-    useState(false);
+  const [isCertificateDownloading, setIsCertificateDownloading] = useState(false);
 
   async function handleCertificateDownload() {
     try {
@@ -35,7 +34,7 @@ export const DownloadCertificate = ({ courseId, totalProgress }) => {
   return (
     <Button
       onClick={handleCertificateDownload}
-      disabled={totalProgress < 100}
+      disabled={totalProgress < 100 || isCertificateDownloading}
       className="w-full mt-6"
     >
       Download Certificate
