@@ -12,7 +12,7 @@ const Course = async ({ params: { id }, searchParams: { name, module } }) => {
 	const defaultLesson = replaceMongoIdInObject(allModules[0]?.lessonIds?.toSorted((a, b) => a.order - b.order)[0]);
 
 	const lessonToPlay = name ? await getLessonBySlug(name) : defaultLesson;
-	const defaultModule = module ?? allModules[0].slug;
+	const defaultModule = module ?? allModules[0]?.slug;
 
 	return (
 		<div>
@@ -22,7 +22,7 @@ const Course = async ({ params: { id }, searchParams: { name, module } }) => {
 				</div>
 				<div>
 					<div className="p-4 flex flex-col md:flex-row items-center justify-between">
-						<h2 className="text-2xl font-semibold mb-2">{lessonToPlay.title}</h2>
+						<h2 className="text-2xl font-semibold mb-2">{lessonToPlay?.title}</h2>
 					</div>
 					<Separator />
 					<VideoDescription description={lessonToPlay?.description} />

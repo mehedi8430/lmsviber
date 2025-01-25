@@ -94,7 +94,7 @@ export const LessonVideo = ({ courseId, lesson, module }) => {
       {
         hasWindow && (
           <ReactPlayer
-            url={lesson.video_url}
+            url={lesson?.video_url}
             width="100%"
             height="470px"
             controls={true}

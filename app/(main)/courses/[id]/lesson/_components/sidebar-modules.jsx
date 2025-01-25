@@ -15,13 +15,13 @@ export const SidebarModules = ({ courseId, modules }) => {
 
     const query = searchParams.get('name')
 
-    const expandModule = allModules.find((module) => {
+    const expandModule = allModules?.find((module) => {
         return module.lessonIds.find((lesson) => {
             return lesson.slug === query;
         });
     });
 
-    const exapndModuleId = expandModule?.id ?? allModules[0].id;
+    const exapndModuleId = expandModule?.id ?? allModules[0]?.id;
 
     return (
         <Accordion

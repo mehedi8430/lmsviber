@@ -12,30 +12,31 @@ const kalamFontUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/fonts/kalam/Kalam-Regu
 const kalamFontBytes = await fetch(kalamFontUrl).then((res) =>
   res.arrayBuffer()
 );
-console.log({
-  env: process.env.NEXT_PUBLIC_BASE_URL,
-});
-console.log({
-  kalamFontUrl,
-  kalamFontBytes,
-});
+// console.log({
+//   env: process.env.NEXT_PUBLIC_BASE_URL,
+// });
+// console.log({
+//   kalamFontUrl,
+//   kalamFontBytes,
+// });
 
 const montserratItalicFontUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/fonts/montserrat/Montserrat-Italic.ttf`;
 const montserratItalicFontBytes = await fetch(montserratItalicFontUrl).then(
   (res) => res.arrayBuffer()
 );
-console.log({
-  montserratItalicFontUrl,
-  montserratItalicFontBytes,
-});
+// console.log({
+//   montserratItalicFontUrl,
+//   montserratItalicFontBytes,
+// });
+
 const montserratFontUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/fonts/montserrat/Montserrat-Medium.ttf`;
 const montserratFontBytes = await fetch(montserratFontUrl).then((res) =>
   res.arrayBuffer()
 );
-console.log({
-  montserratFontUrl,
-  montserratFontBytes,
-});
+// console.log({
+//   montserratFontUrl,
+//   montserratFontBytes,
+// });
 
 export async function GET(request) {
   try {
@@ -50,9 +51,9 @@ export async function GET(request) {
     const loggedInUser = await getLoggedInUser();
 
     const report = await getAReport({ course: courseId, student:loggedInUser.id });
-    console.log(report?.completion_date);
+    // console.log(report?.completion_date);
     const completionDate = report?.completion_date ? formatMyDate(report?.completion_date) : formatMyDate(Date.now());
-    console.log(completionDate);
+    // console.log(completionDate);
 
     const completionInfo = {
       name: `${loggedInUser?.firstName} ${loggedInUser?.lastName}`,
@@ -63,7 +64,7 @@ export async function GET(request) {
       sign: "/sign.png",
     };
 
-    console.log(completionInfo);
+    // console.log(completionInfo);
 
     const pdfDoc = await PDFDocument.create();
     pdfDoc.registerFontkit(fontkit);
@@ -86,6 +87,7 @@ export async function GET(request) {
     const logoBytes = await fetch(logoUrl).then((res) => res.arrayBuffer());
     const logo = await pdfDoc.embedPng(logoBytes);
     const logoDimns = logo.scale(0.5);
+
     page.drawImage(logo, {
       x: width / 2 - logoDimns.width / 2,
       y: height - 120,
@@ -238,12 +240,14 @@ export async function GET(request) {
       height: height,
       opacity: 0.2,
     });
+
     /* -----------------
      *
      * Generate and send Response
      *
      *-------------------*/
     const pdfBytes = await pdfDoc.save();
+    
     return new Response(pdfBytes, {
       headers: { "content-type": "application/pdf" },
     });
