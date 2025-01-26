@@ -16,13 +16,17 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
 
 export function LoginForm() {
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   async function onSubmit(event) {
     event.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
       const formData = new FormData(event.currentTarget);
@@ -37,6 +41,8 @@ export function LoginForm() {
     } catch (err) {
       console.error(err.message);
       setError("Please provide valid credential!");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -61,16 +67,31 @@ export function LoginForm() {
                 type="email"
                 placeholder="m@example.com"
                 required
+                disabled={loading}
               />
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
               </div>
-              <Input id="password" name="password" type="password" required />
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                required
+                disabled={loading}
+              />
             </div>
-            <Button type="submit" className="w-full">
-              Login
+            <Button
+              type="submit"
+              className="w-full flex items-center justify-center"
+              disabled={loading}
+            >
+              {loading ? (
+                <Loader2 className="animate-spin h-5 w-5 mr-2" />
+              ) : (
+                "Login"
+              )}
             </Button>
           </div>
         </form>

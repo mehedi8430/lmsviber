@@ -14,16 +14,23 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
 
 export function SignupForm({ role }) {
   const [error, setError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [emailError, setEmailError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   const onSubmit = async (event) => {
     event.preventDefault();
+
+    setLoading(true);
+    setError(null);
+    setPasswordError(null);
+    setEmailError(null);
 
     try {
       const formData = new FormData(event.currentTarget);
@@ -36,9 +43,11 @@ export function SignupForm({ role }) {
 
       if (password !== confirmPassword) {
         setPasswordError("Passwords do not match!");
+        setLoading(false);
+        return;
       }
 
-      const userRole = ((role === "student") || (role === "instructor")) ? role : "student";
+      const userRole = role === "student" || role === "instructor" ? role : "student";
 
       const response = await fetch("/api/register", {
         method: "POST",
@@ -57,20 +66,21 @@ export function SignupForm({ role }) {
 
       if (response?.status === 201) {
         router.push("/login");
-      }
-
-      if (response?.status === 400) {
-        setEmailError("User with this Email already in exist!");
+      } else if (response?.status === 400) {
+        setEmailError("User with this email already exists!");
+      } else {
+        setError("An unexpected error occurred. Please try again.");
       }
     } catch (err) {
       console.error(err.message);
       setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <Card className="mx-auto max-w-sm">
-
       <CardHeader>
         <CardTitle className="text-xl">Sign Up</CardTitle>
         <CardDescription>
@@ -90,6 +100,7 @@ export function SignupForm({ role }) {
                   name="first-name"
                   placeholder="Max"
                   required
+                  disabled={loading}
                 />
               </div>
               <div className="grid gap-2">
@@ -99,6 +110,7 @@ export function SignupForm({ role }) {
                   name="last-name"
                   placeholder="Robinson"
                   required
+                  disabled={loading}
                 />
               </div>
             </div>
@@ -111,6 +123,7 @@ export function SignupForm({ role }) {
                 type="email"
                 placeholder="m@example.com"
                 required
+                disabled={loading}
               />
               {emailError && <div className="text-red-500">{emailError}</div>}
             </div>
@@ -121,6 +134,7 @@ export function SignupForm({ role }) {
                 id="password"
                 name="password"
                 type="password"
+                disabled={loading}
               />
               {passwordError && <div className="text-red-500">{passwordError}</div>}
             </div>
@@ -131,12 +145,24 @@ export function SignupForm({ role }) {
                 id="confirmPassword"
                 name="confirmPassword"
                 type="password"
+                disabled={loading}
               />
               {passwordError && <div className="text-red-500">{passwordError}</div>}
             </div>
 
-            <Button type="submit" className="w-full">
-              Create an account
+            <Button
+              type="submit"
+              className="w-full flex items-center justify-center"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="animate-spin h-5 w-5 mr-2" />
+                  Registering...
+                </>
+              ) : (
+                "Create an account"
+              )}
             </Button>
           </div>
         </form>
@@ -148,7 +174,6 @@ export function SignupForm({ role }) {
           </Link>
         </div>
       </CardContent>
-
     </Card>
   );
 }
