@@ -117,17 +117,22 @@ export function MainNav({ items, children }) {
 					)
 				}
 				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<div className="cursor-pointer">
-							<Avatar>
-								<AvatarImage
-									src={loggedInUser?.profilePicture}
-									alt="@shadcn"
-								/>
-								<AvatarFallback>{loggedInUser?.firstName.charAt(0)}</AvatarFallback>
-							</Avatar>
-						</div>
-					</DropdownMenuTrigger>
+					{
+						loggedInUser && (
+							<DropdownMenuTrigger asChild>
+								<div className="cursor-pointer">
+									<Avatar>
+										<AvatarImage
+											src={loggedInUser?.profilePicture}
+											alt="@shadcn"
+										/>
+										<AvatarFallback>{loggedInUser?.firstName.charAt(0)}</AvatarFallback>
+									</Avatar>
+								</div>
+							</DropdownMenuTrigger>
+						)
+					}
+
 					<DropdownMenuContent align="end" className="w-56 mt-4">
 						<DropdownMenuItem className="cursor-pointer" asChild>
 							<Link href="/account">Profile</Link>

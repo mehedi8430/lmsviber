@@ -31,7 +31,9 @@ export const Navbar = () => {
 
   return (
     <div className="p-4 border-b h-full flex items-center bg-white shadow-sm">
+      {/* mobile side bar */}
       <MobileSidebar />
+
       <div className="flex items-center justify-end  w-full">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -45,6 +47,7 @@ export const Navbar = () => {
               </Avatar>
             </div>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent align="end" className="w-56 mt-4">
             <DropdownMenuItem className="cursor-pointer">
               <Link
