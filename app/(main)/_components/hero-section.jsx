@@ -30,13 +30,13 @@ export const HeroSection = () => (
             <div className="flex items-center gap-3 flex-wrap justify-center">
                 <Link
                     href="/courses"
-                    className={cn(buttonVariants({ size: "lg" }))}
+                    className={cn(buttonVariants({ size: "lg" }), "bg-custom hover:bg-customHover")}
                 >
                     Explore Now
                 </Link>
                 <Link
                     href="/register/instructor"
-                    className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
+                    className={cn(buttonVariants({ variant: "outline", size: "lg" }), "border border-custom hover:bg-custom hover:text-white")}
                 >
                     Become An Instructor
                 </Link>

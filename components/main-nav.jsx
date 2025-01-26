@@ -86,14 +86,14 @@ export function MainNav({ items, children }) {
 								href="/login"
 								className={cn(
 									buttonVariants({ size: "sm" }),
-									"px-4"
+									"px-4 bg-custom hover:bg-customHover"
 								)}
 							>
 								Login
 							</Link>
 							<DropdownMenu>
 								<DropdownMenuTrigger asChild>
-									<Button variant="outline" size="sm">
+									<Button variant="outline" className="border border-custom hover:bg-custom hover:text-white" size="sm">
 										Register
 									</Button>
 								</DropdownMenuTrigger>

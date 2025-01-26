@@ -13,7 +13,7 @@
 
 .logo .highlight {
   font-family: var(--font-lobster), sans-serif;
-  color: #0070f3;
+  color: #c43c1a;
   font-weight: bold;
   animation: slideIn 2s ease-in-out;
 }
