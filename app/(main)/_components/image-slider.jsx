@@ -1,41 +1,36 @@
-"use client";
-
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
-export const ImageSlider = ({ images }) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-        }, 3000);
-
-        return () => clearInterval(interval);
-    }, [images.length]);
+export function ImageSlider({ images }) {
 
     return (
-        <div className="relative w-full overflow-hidden">
-            <div
-                className="flex transition-transform ease-in-out duration-700"
-                style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-            >
+        <Carousel className="w-full max-w-[90%] mx-auto relative">
+            <CarouselContent className="flex items-center justify-start">
                 {images.map((image, index) => (
-                    <div
+                    <CarouselItem
                         key={index}
-                        className="w-full flex-shrink-0"
-                        style={{ minWidth: "100%" }}
+                        className="flex-shrink-0 w-full flex justify-center items-center"
                     >
-                        <Image
-                            src={image.src}
-                            alt={image.alt}
-                            width={1920}
-                            height={1080}
-                            className="w-full h-auto"
-                        />
-                    </div>
+                        <div className="p-2 flex justify-center items-center w-full h-[500px]">
+                            <Image
+                                src={image.src}
+                                alt={image.alt}
+                                width={1920}
+                                height={1080}
+                                className="object-cover w-full h-full rounded-lg"
+                            />
+                        </div>
+                    </CarouselItem>
                 ))}
-            </div>
-        </div>
+            </CarouselContent>
+            <CarouselPrevious className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md" />
+            <CarouselNext className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md" />
+        </Carousel>
     );
-};
+}

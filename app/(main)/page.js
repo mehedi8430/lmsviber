@@ -13,8 +13,8 @@ const HomePage = async () => {
 
     const sliderImages = [
         { src: "/assets/images/slider/slider-1.png", alt: "Slider Image 1" },
-        { src: "/assets/slider/slider-2.png", alt: "Slider Image 2" },
-        { src: "/assets/slider/slider-3.png", alt: "Slider Image 3" },
+        { src: "/assets/images/slider/slider-2.png", alt: "Slider Image 2" },
+        { src: "/assets/images/slider/slider-3.png", alt: "Slider Image 3" },
     ];
 
     return (
