@@ -11,7 +11,7 @@ export function SiteFooter({ className }) {
             <Logo className="mb-4" />
             <p className="text-sm leading-relaxed">
               Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-              Lorem Ipsum has been the industry's standard dummy text.
+              Lorem Ipsum has been the industry&apos;s standard dummy text.
             </p>
           </div>
 

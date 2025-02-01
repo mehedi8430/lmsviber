@@ -51,9 +51,7 @@ export async function GET(request) {
     const loggedInUser = await getLoggedInUser();
 
     const report = await getAReport({ course: courseId, student:loggedInUser.id });
-    // console.log(report?.completion_date);
     const completionDate = report?.completion_date ? formatMyDate(report?.completion_date) : formatMyDate(Date.now());
-    // console.log(completionDate);
 
     const completionInfo = {
       name: `${loggedInUser?.firstName} ${loggedInUser?.lastName}`,
@@ -63,8 +61,6 @@ export async function GET(request) {
       instructorDesignation: `${course?.instructor?.designation}`,
       sign: "/sign.png",
     };
-
-    // console.log(completionInfo);
 
     const pdfDoc = await PDFDocument.create();
     pdfDoc.registerFontkit(fontkit);

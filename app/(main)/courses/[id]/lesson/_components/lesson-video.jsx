@@ -27,7 +27,7 @@ export const LessonVideo = ({ courseId, lesson, module }) => {
         },
         body: JSON.stringify({
           courseId: courseId,
-          lessonId: lesson.id,
+          lessonId: lesson?.id,
           moduleSlug: module,
           state: "started",
           lastTime: 0
@@ -42,7 +42,7 @@ export const LessonVideo = ({ courseId, lesson, module }) => {
     }
 
     started && updateLessonWatch();
-  }, [started]);
+  }, [started, courseId, lesson?.id, module]);
 
   useEffect(() => {
     async function updateLessonWatch() {
@@ -53,7 +53,7 @@ export const LessonVideo = ({ courseId, lesson, module }) => {
         },
         body: JSON.stringify({
           courseId: courseId,
-          lessonId: lesson.id,
+          lessonId: lesson?.id,
           moduleSlug: module,
           state: "completed",
           lastTime: duration
@@ -68,7 +68,7 @@ export const LessonVideo = ({ courseId, lesson, module }) => {
     }
 
     ended && updateLessonWatch();
-  }, [ended]);
+  }, [ended, courseId, lesson?.id, module, duration, router]);
 
   function handleOnStart() {
     console.log("handleOnStart");
