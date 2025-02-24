@@ -13,7 +13,7 @@ import { enrollForCourse } from "@/queries/enrollments";
 const Success = async ({ searchParams: { session_id, courseId } }) => {
   if (!session_id) throw new Error("Please provide a valid session id that starts with cs_");
 
-  const loggedinUser = await getLoggedInUser();
+  const loggedInUser = await getLoggedInUser();
 
   if (!loggedInUser) {
     redirect("/login");
@@ -68,7 +68,7 @@ const Success = async ({ searchParams: { session_id, courseId } }) => {
   }
 
   return (
-    <div className="h-full w-full flex-1 flex flex-col items-center justify-center">
+    <div className="h-full mb-10 w-full flex-1 flex flex-col items-center justify-center">
       <div className="flex flex-col items-center gap-6 max-w-[600px] text-center">
         {/* TODO: handle paymentstatus is in-progress or any  */}
         {

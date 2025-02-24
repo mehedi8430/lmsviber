@@ -4,6 +4,7 @@ import { stripe } from "@/lib/stripe";
 import { formatAmountForStripe } from "@/lib/stripe-helpers";
 import { getCourseDetails } from "@/queries/courses";
 import { headers } from "next/headers";
+
 const CURRENCY = "usd";
 
 export async function createCheckoutSession(data) {
