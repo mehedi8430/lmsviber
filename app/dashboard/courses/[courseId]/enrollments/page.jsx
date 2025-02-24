@@ -3,7 +3,6 @@ import { getCourseDetails } from "@/queries/courses";
 import { columns } from "./_components/columns";
 import { DataTable } from "./_components/data-table";
 
-
 const EnrollmentsPage = async ({ params: { courseId } }) => {
   const course = await getCourseDetails(courseId);
   const allEnrollments = await getInstructorDashboardData(ENROLLMENT_DATA);

@@ -1,57 +1,47 @@
-import fontkit from "@pdf-lib/fontkit";
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
-
+import { formatMyDate } from "@/lib/date";
 import { getLoggedInUser } from "@/lib/loggedin-user";
 import { getCourseDetails } from "@/queries/courses";
 import { getAReport } from "@/queries/reports";
-
-import { formatMyDate } from "@/lib/date";
-
-// Fetch custom fonts
-const kalamFontUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/fonts/kalam/Kalam-Regular.ttf`;
-const kalamFontBytes = await fetch(kalamFontUrl).then((res) =>
-  res.arrayBuffer()
-);
-// console.log({
-//   env: process.env.NEXT_PUBLIC_BASE_URL,
-// });
-// console.log({
-//   kalamFontUrl,
-//   kalamFontBytes,
-// });
-
-const montserratItalicFontUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/fonts/montserrat/Montserrat-Italic.ttf`;
-const montserratItalicFontBytes = await fetch(montserratItalicFontUrl).then(
-  (res) => res.arrayBuffer()
-);
-// console.log({
-//   montserratItalicFontUrl,
-//   montserratItalicFontBytes,
-// });
-
-const montserratFontUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/fonts/montserrat/Montserrat-Medium.ttf`;
-const montserratFontBytes = await fetch(montserratFontUrl).then((res) =>
-  res.arrayBuffer()
-);
-// console.log({
-//   montserratFontUrl,
-//   montserratFontBytes,
-// });
+import fontkit from "@pdf-lib/fontkit";
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 
 export async function GET(request) {
   try {
+    // Fetch custom fonts dynamically at runtime
+    const kalamFontUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/fonts/kalam/Kalam-Regular.ttf`;
+    const kalamFontBytes = await fetch(kalamFontUrl).then((res) =>
+      res.arrayBuffer()
+    );
+
+    const montserratItalicFontUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/fonts/montserrat/Montserrat-Italic.ttf`;
+    const montserratItalicFontBytes = await fetch(montserratItalicFontUrl).then(
+      (res) => res.arrayBuffer()
+    );
+
+    const montserratFontUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/fonts/montserrat/Montserrat-Medium.ttf`;
+    const montserratFontBytes = await fetch(montserratFontUrl).then((res) =>
+      res.arrayBuffer()
+    );
+
     /* -----------------
-     *
-     * Configuratios
-     *
+     * Configurations
      *-------------------*/
-    const searchParams = request.nextUrl.searchParams
-    const courseId = searchParams.get('courseId');
-    const course  = await getCourseDetails(courseId);
+    const searchParams = request.nextUrl.searchParams;
+    const courseId = searchParams.get("courseId");
+    if (!courseId) {
+      return new Response("Missing courseId parameter", { status: 400 });
+    }
+
+    const course = await getCourseDetails(courseId);
     const loggedInUser = await getLoggedInUser();
 
-    const report = await getAReport({ course: courseId, student:loggedInUser.id });
-    const completionDate = report?.completion_date ? formatMyDate(report?.completion_date) : formatMyDate(Date.now());
+    const report = await getAReport({
+      course: courseId,
+      student: loggedInUser.id,
+    });
+    const completionDate = report?.completion_date
+      ? formatMyDate(report.completion_date)
+      : formatMyDate(Date.now());
 
     const completionInfo = {
       name: `${loggedInUser?.firstName} ${loggedInUser?.lastName}`,
@@ -67,7 +57,6 @@ export async function GET(request) {
 
     const kalamFont = await pdfDoc.embedFont(kalamFontBytes);
     const montserratItalic = await pdfDoc.embedFont(montserratItalicFontBytes);
-
     const montserrat = await pdfDoc.embedFont(montserratFontBytes);
 
     const page = pdfDoc.addPage([841.89, 595.28]);
@@ -75,9 +64,7 @@ export async function GET(request) {
     const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
 
     /* -----------------
-     *
      * Logo
-     *
      *-------------------*/
     const logoUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/logo.png`;
     const logoBytes = await fetch(logoUrl).then((res) => res.arrayBuffer());
@@ -92,20 +79,16 @@ export async function GET(request) {
     });
 
     /* -----------------
-     *
      * Title
-     *
      *-------------------*/
-
     const titleFontSize = 30;
     const titleText = "Certificate Of Completion";
-    // title text width
     const titleTextWidth = montserrat.widthOfTextAtSize(
       titleText,
       titleFontSize
     );
 
-    page.drawText("Certificate Of Completion", {
+    page.drawText(titleText, {
       x: width / 2 - titleTextWidth / 2,
       y: height - (logoDimns.height + 125),
       size: titleFontSize,
@@ -114,14 +97,10 @@ export async function GET(request) {
     });
 
     /* -----------------
-     *
      * Name Label
-     *
      *-------------------*/
     const nameLabelText = "This certificate is hereby bestowed upon";
-
     const nameLabelFontSize = 20;
-    // title text width
     const nameLabelTextWidth = montserratItalic.widthOfTextAtSize(
       nameLabelText,
       nameLabelFontSize
@@ -136,14 +115,10 @@ export async function GET(request) {
     });
 
     /* -----------------
-     *
      * Name
-     *
      *-------------------*/
     const nameText = completionInfo.name;
-
     const nameFontSize = 40;
-    // title text width
     const nameTextWidth = timesRomanFont.widthOfTextAtSize(
       nameText,
       nameFontSize
@@ -158,14 +133,10 @@ export async function GET(request) {
     });
 
     /* -----------------
-     *
      * Details Info
-     *
      *-------------------*/
     const detailsText = `This is to certify that ${completionInfo.name} successfully completed the ${completionInfo.courseName} course on ${completionInfo.completionDate} by ${completionInfo.instructor}`;
-
     const detailsFontSize = 16;
-    // title text width
     const detailsTextWidth = montserrat.widthOfTextAtSize(
       titleText,
       titleFontSize
@@ -182,9 +153,7 @@ export async function GET(request) {
     });
 
     /* -----------------
-     *
      * Signatures
-     *
      *-------------------*/
     const signatureBoxWidth = 300;
     page.drawText(completionInfo.instructor, {
@@ -200,7 +169,7 @@ export async function GET(request) {
       size: 10,
       font: timesRomanFont,
       color: rgb(0, 0, 0),
-      maxWidth: 250
+      maxWidth: 250,
     });
     page.drawLine({
       start: { x: width - signatureBoxWidth, y: 110 },
@@ -210,7 +179,6 @@ export async function GET(request) {
     });
 
     const signUrl = `${process.env.NEXT_PUBLIC_BASE_URL}${completionInfo.sign}`;
-
     const signBytes = await fetch(signUrl).then((res) => res.arrayBuffer());
     const sign = await pdfDoc.embedPng(signBytes);
 
@@ -221,9 +189,8 @@ export async function GET(request) {
       height: 54,
     });
 
-    // pattern
+    // Pattern
     const patternUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/pattern.jpg`;
-
     const patternBytes = await fetch(patternUrl).then((res) =>
       res.arrayBuffer()
     );
@@ -238,16 +205,15 @@ export async function GET(request) {
     });
 
     /* -----------------
-     *
-     * Generate and send Response
-     *
+     * Generate and Send Response
      *-------------------*/
     const pdfBytes = await pdfDoc.save();
-    
+
     return new Response(pdfBytes, {
-      headers: { "content-type": "application/pdf" },
+      headers: { "Content-Type": "application/pdf" },
     });
   } catch (error) {
-    console.log(error);
+    console.error("Error generating certificate:", error);
+    return new Response("Failed to generate certificate", { status: 500 });
   }
 }

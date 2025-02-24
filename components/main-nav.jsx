@@ -51,6 +51,8 @@ export function MainNav({ items, children }) {
 			<Link href="/">
 				<Logo />
 			</Link>
+
+			{/* Nav Menu */}
 			<div className="flex gap-6 lg:gap-10">
 				{
 					items?.length ? (
@@ -61,7 +63,7 @@ export function MainNav({ items, children }) {
 										key={index}
 										href={item.disabled ? "#" : item.href}
 										className={cn(
-											"flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm"
+											"flex items-center text-xl font-medium transition-colors hover:text-foreground/80 sm:text-sm"
 										)}
 									>
 										{item.title}
