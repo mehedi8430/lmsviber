@@ -83,9 +83,9 @@ export const LessonAccessForm = ({ initialData, courseId, lessonId }) => {
             )}
           >
             {free ? (
-              <>This chapter is free for preview</>
+              <>This chapter is now public for preview</>
             ) : (
-              <>This chapter is not free</>
+              <>This chapter is private</>
             )}
           </p>
         )
@@ -110,7 +110,7 @@ export const LessonAccessForm = ({ initialData, courseId, lessonId }) => {
                     </FormControl>
                     <div className="space-y-1 leading-none">
                       <FormDescription>
-                        Check this box if you want to make this chapter free for
+                        Check this box if you want to make this chapter public for
                         preview
                       </FormDescription>
                     </div>

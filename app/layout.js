@@ -12,8 +12,8 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "EduTechOnline - World's Best Learning Platform",
-  description: "Explore || Learn || Build || Share",
+  title: "lmsViber - Next-Gen LMS for Future-Ready Minds.",
+  description: "lmsViber is a next-generation learning platform designed to energize your skills, knowledge, and growth — anytime, anywhere.",
 };
 
 export default async function RootLayout({ children }) {

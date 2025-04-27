@@ -12,7 +12,7 @@ export const Logo = ({ className = "" }) => {
 
   return (
     <h1 className={cn("logo", lobster.variable, className)}>
-      <span className="highlight text-4xl">eOnline</span>
+      <span className="highlight text-4xl">lmsViber</span>
     </h1>
   );
 };

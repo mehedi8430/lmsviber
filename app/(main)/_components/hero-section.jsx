@@ -17,15 +17,14 @@ export const HeroSection = () => (
                     className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
                 />
             </div>
-            <span className="rounded-2xl bg-muted px-4 py-1.5 text-sm font-medium border shadow-lg">
-                Hey, Welcome
-            </span>
             <h1 className="font-heading text-3xl font-bold sm:text-5xl md:text-6xl lg:text-7xl">
-                Learn Today, Lead Tomorrow.
+                Learn Smart. Vibe Higher.
             </h1>
+            {/* <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
+                “The smarter you learn, the higher you rise.”
+            </p> */}
             <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-                “You don’t understand anything until you learn it more than one
-                way.”
+                “Smart learning lights the path; your vibe fuels the journey”
             </p>
             <div className="flex items-center gap-3 flex-wrap justify-center">
                 <Link
