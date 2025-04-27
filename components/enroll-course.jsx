@@ -6,10 +6,7 @@ import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 
 export const EnrollCourse = ({ asLink, courseId }) => {
-    console.log("courseid", courseId)
-
     const formAction = async (data) => {
-        console.log("data", data)
         const { url } = await createCheckoutSession(data);
         window.location.assign(url);
     }

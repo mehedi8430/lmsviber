@@ -35,6 +35,7 @@ export async function getCourseList() {
 
 export async function getCourseDetails(id) {
     await dbConnect();
+    console.log("course id", id)
 
     const course = await Course.findById(id).populate({
         path: "category",

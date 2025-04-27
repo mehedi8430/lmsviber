@@ -43,7 +43,7 @@ const CourseCard = ({ course }) => {
         </p>
         <EnrollCourse
           asLink={true}
-          ccourseId={course?.id}
+          courseId={course?.id}
         />
       </div>
     </div>

@@ -30,7 +30,7 @@ export const SidebarModules = ({ courseId, modules }) => {
         >
             {allModules.map((module) => (
                 <AccordionItem key={module.id} className="border-0" value={module.id}>
-                    <AccordionTrigger> {module.title} </AccordionTrigger>
+                    <AccordionTrigger className="text-start">{module.title} </AccordionTrigger>
                     <SidebarLessons
                         courseId={courseId}
                         lessons={module.lessonIds}
