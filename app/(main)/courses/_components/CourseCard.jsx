@@ -4,8 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { EnrollCourse } from "@/components/enroll-course";
+import { getLoggedInUser } from "@/lib/loggedin-user";
+import { hasEnrollmentForCourse } from "@/queries/enrollments";
 
-const CourseCard = ({ course }) => {
+const CourseCard = async ({ course }) => {
+  const loggedinUser = await getLoggedInUser();
+  const isEnrolled = await hasEnrollmentForCourse(course?.id, loggedinUser?.id);
 
   return (
     <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full">
@@ -41,10 +45,24 @@ const CourseCard = ({ course }) => {
         <p className="text-md md:text-sm font-medium text-slate-700">
           {formatPrice(course?.price)}
         </p>
-        <EnrollCourse
-          asLink={true}
-          courseId={course?.id}
-        />
+        {
+          !isEnrolled && (
+            <EnrollCourse
+              asLink={true}
+              courseId={course?.id}
+            />
+          )
+        }
+        {
+          loggedinUser?.id && isEnrolled && (
+            <Link
+              href={`/courses/${course.id}/lesson`}
+              className="text-xs px-2 py-1 text-gray-200 rounded-md bg-custom hover:bg-customHover"
+            >
+              Continue
+            </Link>
+          )
+        }
       </div>
     </div>
   );
