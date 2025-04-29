@@ -20,7 +20,7 @@ import { signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 
-export function MainNav({ items, children }) {
+export function MainNav({ children, navLinks }) {
 	const { data: session } = useSession();
 
 	const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -52,137 +52,140 @@ export function MainNav({ items, children }) {
 				<Logo />
 			</Link>
 
-			{/* Nav Menu */}
-			<div className="flex gap-6 lg:gap-10 ml-[-120px]">
-				{
-					items?.length ? (
-						<nav className="hidden gap-6 lg:flex">
-							{
-								items?.map((item, index) => (
-									<Link
-										key={index}
-										href={item.disabled ? "#" : item.href}
-										className={cn(
-											"flex items-center text-xl font-medium transition-colors hover:text-foreground/80 sm:text-sm"
-										)}
-									>
-										{item.title}
-									</Link>
-								))
-							}
-						</nav>
-					) : null
-				}
-
-				{
-					showMobileMenu && items && (
-						<MobileNav items={items}>{children}</MobileNav>
-					)
-				}
-			</div>
-
-			{/* Right Menu */}
-			<nav className="flex items-center gap-3">
-				{
-					!loginSession && (
-						<div className="items-center gap-3 hidden lg:flex">
-							<Link
-								href="/login"
-								className={cn(
-									buttonVariants({ size: "sm" }),
-									"px-4 bg-custom hover:bg-customHover"
-								)}
-							>
-								Login
-							</Link>
-							<DropdownMenu>
-								<DropdownMenuTrigger asChild>
-									<Button variant="outline" className="border border-custom hover:bg-custom hover:text-white" size="sm">
-										Register
-									</Button>
-								</DropdownMenuTrigger>
-								<DropdownMenuContent
-									align="end"
-									className="w-56 mt-4"
-								>
-									<DropdownMenuItem className="cursor-pointer">
-										<Link href="/register/student">
-											Student
-										</Link>
-									</DropdownMenuItem>
-									<DropdownMenuItem className="cursor-pointer">
-										<Link href="/register/instructor">
-											Instructor
-										</Link>
-									</DropdownMenuItem>
-								</DropdownMenuContent>
-							</DropdownMenu>
-						</div>
-					)
-				}
-				<DropdownMenu>
+			<div className="flex gap-6">
+				{/* Nav Menu */}
+				<div className="flex gap-6 lg:gap-10">
 					{
-						loggedInUser && (
-							<DropdownMenuTrigger asChild>
-								<div className="cursor-pointer">
-									<Avatar>
-										<AvatarImage
-											src={loggedInUser?.profilePicture}
-											alt="@shadcn"
-										/>
-										<AvatarFallback>{loggedInUser?.firstName.charAt(0)}</AvatarFallback>
-									</Avatar>
-								</div>
-							</DropdownMenuTrigger>
-						)
+						navLinks?.length ? (
+							<nav className="hidden gap-6 lg:flex">
+								{
+									navLinks?.map((item, index) => (
+										<Link
+											key={index}
+											href={item.disabled ? "#" : item.href}
+											className={cn(
+												"flex items-center md:text-[1rem] font-medium transition-colors hover:text-foreground/80 sm:text-sm"
+											)}
+										>
+											{/* {item?.icon} */}
+											{item.title}
+										</Link>
+									))
+								}
+							</nav>
+						) : null
 					}
 
-					<DropdownMenuContent align="end" className="w-56 mt-4">
-						<DropdownMenuItem className="cursor-pointer" asChild>
-							<Link href="/account">Profile</Link>
-						</DropdownMenuItem>
+					{
+						showMobileMenu && navLinks && (
+							<MobileNav items={navLinks}>{children}</MobileNav>
+						)
+					}
+				</div>
+
+				{/* Right Menu */}
+				<nav className="flex items-center gap-3">
+					{
+						!loginSession && (
+							<div className="items-center gap-3 hidden lg:flex">
+								<Link
+									href="/login"
+									className={cn(
+										buttonVariants({ size: "sm" }),
+										"px-4 bg-custom hover:bg-customHover"
+									)}
+								>
+									Login
+								</Link>
+								<DropdownMenu>
+									<DropdownMenuTrigger asChild>
+										<Button variant="outline" className="border border-custom hover:bg-custom hover:text-white" size="sm">
+											Register
+										</Button>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent
+										align="end"
+										className="w-56 mt-4"
+									>
+										<DropdownMenuItem className="cursor-pointer">
+											<Link href="/register/student">
+												Student
+											</Link>
+										</DropdownMenuItem>
+										<DropdownMenuItem className="cursor-pointer">
+											<Link href="/register/instructor">
+												Instructor
+											</Link>
+										</DropdownMenuItem>
+									</DropdownMenuContent>
+								</DropdownMenu>
+							</div>
+						)
+					}
+					<DropdownMenu>
 						{
-							loggedInUser?.role === "instructor" && (
+							loggedInUser && (
+								<DropdownMenuTrigger asChild>
+									<div className="cursor-pointer">
+										<Avatar>
+											<AvatarImage
+												src={loggedInUser?.profilePicture}
+												alt="@shadcn"
+											/>
+											<AvatarFallback>{loggedInUser?.firstName.charAt(0)}</AvatarFallback>
+										</Avatar>
+									</div>
+								</DropdownMenuTrigger>
+							)
+						}
+
+						<DropdownMenuContent align="end" className="w-56 mt-4">
+							<DropdownMenuItem className="cursor-pointer" asChild>
+								<Link href="/account">Profile</Link>
+							</DropdownMenuItem>
+							{
+								loggedInUser?.role === "instructor" && (
+									<DropdownMenuItem
+										className="cursor-pointer"
+										asChild
+									>
+										<Link href="/dashboard">Dashboard</Link>
+									</DropdownMenuItem>
+								)
+							}
+							<DropdownMenuItem className="cursor-pointer" asChild>
+								<Link href="/account/enrolled-courses">
+									My Courses
+								</Link>
+							</DropdownMenuItem>
+							<DropdownMenuItem className="cursor-pointer" asChild>
+								<Link href="">Testimonials & Certificates</Link>
+							</DropdownMenuItem>
+							{loginSession && (
 								<DropdownMenuItem
 									className="cursor-pointer"
 									asChild
 								>
-									<Link href="/dashboard">Dashboard</Link>
+									<Link
+										href="#"
+										onClick={() => {
+											signOut();
+										}}
+									>
+										Logout
+									</Link>
 								</DropdownMenuItem>
-							)
-						}
-						<DropdownMenuItem className="cursor-pointer" asChild>
-							<Link href="/account/enrolled-courses">
-								My Courses
-							</Link>
-						</DropdownMenuItem>
-						<DropdownMenuItem className="cursor-pointer" asChild>
-							<Link href="">Testimonials & Certificates</Link>
-						</DropdownMenuItem>
-						{loginSession && (
-							<DropdownMenuItem
-								className="cursor-pointer"
-								asChild
-							>
-								<Link
-									href="#"
-									onClick={() => {
-										signOut();
-									}}
-								>
-									Logout
-								</Link>
-							</DropdownMenuItem>
-						)}
-					</DropdownMenuContent>
-				</DropdownMenu>
-				<button
-					className="flex items-center space-x-2 lg:hidden"
-					onClick={() => setShowMobileMenu(!showMobileMenu)}
-				>
-					{showMobileMenu ? <X /> : <Menu />}
-				</button>
-			</nav>
+							)}
+						</DropdownMenuContent>
+					</DropdownMenu>
+					<button
+						className="flex items-center space-x-2 lg:hidden"
+						onClick={() => setShowMobileMenu(!showMobileMenu)}
+					>
+						{showMobileMenu ? <X /> : <Menu />}
+					</button>
+				</nav>
+			</div>
 		</>
 	);
 }
