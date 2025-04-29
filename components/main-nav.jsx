@@ -53,7 +53,7 @@ export function MainNav({ items, children }) {
 			</Link>
 
 			{/* Nav Menu */}
-			<div className="flex gap-6 lg:gap-10">
+			<div className="flex gap-6 lg:gap-10 ml-[-120px]">
 				{
 					items?.length ? (
 						<nav className="hidden gap-6 lg:flex">
@@ -80,6 +80,8 @@ export function MainNav({ items, children }) {
 					)
 				}
 			</div>
+
+			{/* Right Menu */}
 			<nav className="flex items-center gap-3">
 				{
 					!loginSession && (

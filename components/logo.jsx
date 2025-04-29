@@ -1,5 +1,6 @@
-import { cn } from "@/lib/utils";
+// import { cn } from "@/lib/utils";
 import { Lobster } from "next/font/google";
+import Image from "next/image";
 import "./Logo.css";
 
 const lobster = Lobster({
@@ -11,8 +12,15 @@ const lobster = Lobster({
 export const Logo = ({ className = "" }) => {
 
   return (
-    <h1 className={cn("logo", lobster.variable, className)}>
-      <span className="highlight text-4xl">lmsViber</span>
-    </h1>
+    <div className="w-80 h-28 my-auto flex items-center">
+      <Image
+        src="/logo.png"
+        alt="Logo"
+        width={310}
+        height={100}
+        className="ml-[-56px]"
+        priority
+      />
+    </div>
   );
 };
