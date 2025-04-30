@@ -11,7 +11,7 @@ export const CoursesSection = ({ courses }) => {
                 <SectionTitle>Courses</SectionTitle>
                 <Link
                     href="/courses"
-                    className="text-sm font-medium hover:opacity-80 flex items-center gap-1"
+                    className="text-sm font-medium hover:opacity-80 flex items-center gap-1 border border-orange-700 rounded-md px-4 py-2 hover:bg-orange-700 hover:text-white transition duration-200 ease-in-out"
                 >
                     Browse All <ArrowRightIcon className="h-4 w-4" />
                 </Link>

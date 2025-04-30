@@ -67,7 +67,6 @@ export function MainNav({ children, navLinks }) {
 												"flex items-center md:text-[1rem] font-medium transition-colors hover:text-foreground/80 sm:text-sm"
 											)}
 										>
-											{/* {item?.icon} */}
 											{item.title}
 										</Link>
 									))

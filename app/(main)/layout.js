@@ -1,13 +1,11 @@
 import { MainNav } from "@/components/main-nav";
 import { SiteFooter } from "@/components/site-footer";
 import AppProvider from "@/providers/AppProvider";
-import { House } from "lucide-react";
 
 const navLinks = [
     {
         title: "Home",
         href: "/",
-        icon: <House />
     },
     {
         title: "Courses",

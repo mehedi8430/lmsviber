@@ -19,7 +19,7 @@ export const EnrollCourse = ({ asLink, courseId }) => {
                     <Button
                         type="submit"
                         variant="ghost"
-                        className="text-xs text-custom hover:text-customHover h-7 gap-1"
+                        className="text-sm h-7 gap-1 bg-orange-700 hover:bg-orange-700 text-white rounded-full px-4 py-1"
                     >
                         Enroll
                         <ArrowRight className="w-3" />

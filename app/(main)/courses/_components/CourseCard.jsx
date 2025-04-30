@@ -1,3 +1,8 @@
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
 import { formatPrice } from "@/lib/formatPrice";
 import { BookOpen } from "lucide-react";
 import Image from "next/image";
@@ -8,6 +13,7 @@ import { getLoggedInUser } from "@/lib/loggedin-user";
 import { hasEnrollmentForCourse } from "@/queries/enrollments";
 
 const CourseCard = async ({ course }) => {
+  console.log("course", course)
   const loggedinUser = await getLoggedInUser();
   const isEnrolled = await hasEnrollmentForCourse(course?.id, loggedinUser?.id);
 
@@ -30,6 +36,13 @@ const CourseCard = async ({ course }) => {
             <p className="text-xs text-muted-foreground">
               {course?.category?.title}
             </p>
+            <div className="flex items-center gap-x-2 mt-2">
+              <Avatar className="w-6 h-6">
+                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <p>{course?.instructor?.firstName} {course?.instructor?.lastName}</p>
+            </div>
             <div className="my-3 flex items-center gap-x-2 text-sm md:text-xs">
               <div className="flex items-center gap-x-1 text-slate-500">
                 <div>
@@ -42,9 +55,6 @@ const CourseCard = async ({ course }) => {
         </div>
       </Link>
       <div className="flex items-center justify-between mt-4">
-        <p className="text-md md:text-sm font-medium text-slate-700">
-          {formatPrice(course?.price)}
-        </p>
         {
           !isEnrolled && (
             <EnrollCourse
@@ -63,6 +73,10 @@ const CourseCard = async ({ course }) => {
             </Link>
           )
         }
+
+        <p className="text-md md:text-sm font-medium text-slate-700">
+          {formatPrice(course?.price)}
+        </p>
       </div>
     </div>
   );

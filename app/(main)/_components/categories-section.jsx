@@ -3,6 +3,7 @@ import { ArrowRightIcon, Link } from "lucide-react";
 import Image from "next/image";
 
 export const CategoriesSection = ({ categories }) => {
+    console.log("categories", categories)
 
     return (
         <section
@@ -25,6 +26,9 @@ export const CategoriesSection = ({ categories }) => {
                         key={category?.id}
                         className="relative overflow-hidden rounded-lg border bg-background p-2 hover:scale-105 transition-all duration-500 ease-in-out"
                     >
+                        {console.log("in the category card")}
+                        {console.log("category title", category?.title)}
+                        <h1>qwdgfe</h1>
                         <div className="flex flex-col gap-4 items-center justify-between rounded-md p-6">
                             <Image
                                 src={`/assets/images/categories/${category?.thumbnail}`}

@@ -1,6 +1,5 @@
 import { getCategories } from "@/queries/categories";
 import { getCourseList } from "@/queries/courses";
-import { CategoriesSection } from "./_components/categories-section";
 import { CoursesSection } from "./_components/courses-section";
 import { HeroSection } from "./_components/hero-section";
 import { ImageSlider } from "./_components/image-slider";
@@ -19,7 +18,7 @@ const HomePage = async () => {
         <>
             <HeroSection />
             <ImageSlider images={sliderImages} />
-            <CategoriesSection categories={categories} />
+            {/* <CategoriesSection categories={categories} /> */}
             <CoursesSection courses={courses} />
         </>
     );
