@@ -15,6 +15,7 @@ function QuizModal({ courseId, quizSetId, quizzes, open, setOpen }) {
   const [answers, setAnswers] = useState([]);
   const lastQuizIndex = totalQuizes - 1;
   const currentQuiz = quizzes[quizIndex];
+  const [selectedOptions, setSelectedOptions] = useState({});
 
   // change quiz
   const quizChangeHanlder = (type) => {
@@ -33,6 +34,11 @@ function QuizModal({ courseId, quizSetId, quizzes, open, setOpen }) {
     const key = event.target.name;
     const checked = event.target.checked;
 
+    setSelectedOptions(prev => ({
+      ...prev,
+      [quizId]: selected
+    }));
+
     const obj = {};
     if (checked) {
       obj["option"] = selected
@@ -42,8 +48,8 @@ function QuizModal({ courseId, quizSetId, quizzes, open, setOpen }) {
       quizId: quizId,
       options: [obj]
     }
-
     console.log(answer);
+
     const found = answers.find((a) => a.quizId === answer.quizId);
 
     if (found) {
@@ -52,7 +58,6 @@ function QuizModal({ courseId, quizSetId, quizzes, open, setOpen }) {
     } else {
       setAnswers([...answers, answer]);
     }
-
   }
 
   const submitQuiz = async (event) => {
@@ -116,31 +121,35 @@ function QuizModal({ courseId, quizSetId, quizzes, open, setOpen }) {
             </span>
           </div>
           <div className="grid md:grid-cols-2 gap-5 mb-6">
-            {currentQuiz?.options.map((option) => (
-              <div key={option.label}>
-                <input
-                  className="opacity-0 invisible absolute [&:checked_+_label]:bg-success/5"
-                  type="radio"
-                  name="answer"
-                  onChange={(e, quizId, quizTitle, selected) =>
-                    updateAnswer(
-                      e,
-                      quizzes[quizIndex].id,
-                      quizzes[quizIndex].title,
-                      option.label
-                    )
-                  }
-                  id={`option-${option.label}`}
-                />
-                <Label
-                  className="border border-border rounded px-2 py-3 block cursor-pointer hover:bg-gray-50 transition-all font-normal"
-                  htmlFor={`option-${option.label}`}
-                >
-                  {option.label}
-                </Label>
-              </div>
-            ))}
+            {
+              currentQuiz?.options.map((option) => (
+                <div key={option.label} className="">
+                  <input
+                    className="opacity-0 invisible absolute [&:checked_+_label]:bg-success/5"
+                    type="radio"
+                    name={`answer-${currentQuiz.id}`}
+                    checked={selectedOptions[currentQuiz.id] === option.label}
+                    onChange={(e, quizId, quizTitle, selected) =>
+                      updateAnswer(
+                        e,
+                        quizzes[quizIndex].id,
+                        quizzes[quizIndex].title,
+                        option.label
+                      )
+                    }
+                    id={`option-${option.label}`}
+                  />
+                  <Label
+                    className={`border border-border rounded px-2 py-3 block cursor-pointer font-normal ${selectedOptions[currentQuiz.id] === option.label ? 'bg-green-500 border border-green-600' : ''}`}
+                    htmlFor={`option-${option.label}`}
+                  >
+                    {option.label}
+                  </Label>
+                </div>
+              ))
+            }
           </div>
+
           <DialogFooter className="flex gap-4 justify-between w-full sm:justify-between">
             <Button
               className="gap-2 rounded-3xl"
@@ -163,7 +172,7 @@ function QuizModal({ courseId, quizSetId, quizzes, open, setOpen }) {
             </Button>
           </DialogFooter>
         </DialogContent>
-      </Dialog>
+      </Dialog >
     </>
   );
 }

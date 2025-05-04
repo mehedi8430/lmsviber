@@ -20,7 +20,7 @@ const CourseLayout = async ({ children, params: { id } }) => {
   }
 
   return (
-    <div className="">
+    <div className="mb-10">
       <div className="h-[80px] lg:pl-96 fixed top-[60px] inset-y-0 w-full z-10">
         <div className="flex lg:hidden p-4 border-b h-full items-center bg-white shadow-sm relative">
           <CourseSidebarMobile courseId={id} />
