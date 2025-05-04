@@ -41,7 +41,7 @@ const PersonalDetails = ({ userInfo }) => {
   }
 
   return (
-    <div className="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+    <div className="p-6 rounded-md shadow-md bg-[rgba(144,137,252,0.2)] ">
       <h5 className="text-lg font-semibold mb-4">Personal Detail :</h5>
 
       <form onSubmit={handleUpdate}>

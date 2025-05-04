@@ -6,7 +6,7 @@ import CourseCard from "../courses/_components/CourseCard";
 export const CoursesSection = ({ courses }) => {
 
     return (
-        <section id="courses" className="container space-y-6 md:py-12 lg:py-24">
+        <section id="courses" className="container space-y-6 py-8 md:py-12 lg:py-24">
             <div className="flex items-center justify-between">
                 <SectionTitle>Courses</SectionTitle>
                 <Link

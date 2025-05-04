@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const HeroSection = () => (
-    <section className="space-y-6 grainy py-6 md:py-0">
+    <section className="space-y-6 py-6 md:py-0">
         <div className="container flex flex-col md:flex-row items-center justify-center gap-4">
             <div className="order-2 md:order-1">
                 <Image

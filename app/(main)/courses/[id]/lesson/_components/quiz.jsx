@@ -11,7 +11,7 @@ export function Quiz({ courseId, quizSet, isTaken }) {
 
     console.log(quizSet.quizIds);
 
-    const quizzes = quizSet.quizIds.map((quiz) => {
+    const quizzes = quizSet?.quizIds?.map((quiz) => {
         return {
             id: quiz._id.toString(),
             title: quiz.title,
@@ -66,7 +66,7 @@ export function Quiz({ courseId, quizSet, isTaken }) {
                     </Button>
                 </div>
             </div>
-            <QuizModal courseId={courseId} quizSetId={quizSet._id.toString()} quizzes={quizzes} open={open} setOpen={setOpen} />
+            <QuizModal courseId={courseId} quizSetId={quizSet?._id?.toString()} quizzes={quizzes} open={open} setOpen={setOpen} />
         </>
     );
 }

@@ -53,7 +53,7 @@ const EnrolledCourseCard = async ({ enrollment }) => {
 
 
     return (
-        <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full">
+        <div className="group shadow-md hover:shadow-xl bg-[rgba(144,137,252,0.2)] transition overflow-hidden border rounded-lg p-3 h-full">
             <div className="relative w-full aspect-video rounded-md overflow-hidden">
                 <Image
                     src={`/assets/images/courses/${enrollment?.course?.thumbnail}`}

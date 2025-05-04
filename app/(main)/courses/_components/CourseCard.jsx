@@ -18,7 +18,7 @@ const CourseCard = async ({ course }) => {
   const isEnrolled = await hasEnrollmentForCourse(course?.id, loggedinUser?.id);
 
   return (
-    <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full">
+    <div className="group shadow-lg hover:shadow-2xl bg-[rgba(144,137,252,0.2)] transition overflow-hidden rounded-lg p-3 h-full border-[1px] ">
       <Link key={course.id} href={`/courses/${course.id}`}>
         <div>
           <div className="relative w-full aspect-video rounded-md overflow-hidden">
@@ -30,7 +30,7 @@ const CourseCard = async ({ course }) => {
             />
           </div>
           <div className="flex flex-col pt-2">
-            <div className="text-lg md:text-base font-medium group-hover:text-sky-700 line-clamp-2">
+            <div className="text-lg md:text-base font-medium group-hover:text-orange-700 line-clamp-2">
               {course?.title}
             </div>
             <p className="text-xs text-muted-foreground">
@@ -67,7 +67,7 @@ const CourseCard = async ({ course }) => {
           loggedinUser?.id && isEnrolled && (
             <Link
               href={`/courses/${course.id}/lesson`}
-              className="text-xs px-2 py-1 text-gray-200 rounded-md bg-custom hover:bg-customHover"
+              className="text-sm px-4 py-1 rounded-full bg-orange-700 hover:bg-orange-700 hover:text-black text-white"
             >
               Continue
             </Link>

@@ -1,17 +1,15 @@
-import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 
 export function SiteFooter({ className }) {
   return (
-    <footer className={cn("bg-[#FCF8F4] text-gray-700", className)}>
+    <footer>
       <div className="container mx-auto px-4 py-10">
         <div className="grid gap-8 md:grid-cols-5">
           {/* Logo and Description */}
-          <div>
-            <Logo className="mb-4" />
+          <div className="mt-[-40px]">
+            <Logo />
             <p className="text-sm leading-relaxed">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-              Lorem Ipsum has been the industry&apos;s standard dummy text.
+              Transform your learning journey with lmsViber — a modern LMS built for the future of education.
             </p>
           </div>
 

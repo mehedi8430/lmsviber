@@ -13,7 +13,7 @@ const CoursesPage = async () => {
     return (
         <section
             id="courses"
-            className="container space-y-6   dark:bg-transparent py-6"
+            className="container space-y-6 dark:bg-transparent py-6"
         >
             {/* <h2 className="text-xl md:text-2xl font-medium">All Courses</h2> */}
             {/* header */}
