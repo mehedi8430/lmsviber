@@ -62,7 +62,6 @@ function QuizModal({ courseId, quizSetId, quizzes, open, setOpen }) {
 
   const submitQuiz = async (event) => {
     try {
-      console.log(answers);
       await addQuizAssessment(courseId, quizSetId, answers);
       setOpen(false);
       router.refresh();
@@ -70,7 +69,6 @@ function QuizModal({ courseId, quizSetId, quizzes, open, setOpen }) {
     } catch (error) {
       toast.error('Problem in submitting the quiz');
     }
-
   }
 
   return (

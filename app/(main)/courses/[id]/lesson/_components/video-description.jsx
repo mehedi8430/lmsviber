@@ -12,7 +12,7 @@ function VideoDescription({ description }) {
 				</TabsList>
 				<div className="pt-3">
 					<TabsContent value="details">
-						{description}
+						<span dangerouslySetInnerHTML={{ __html: description }} />
 					</TabsContent>
 				</div>
 			</Tabs>

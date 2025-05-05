@@ -2,10 +2,13 @@ import { replaceMongoIdInObject } from "@/lib/convertData";
 import { Assessment } from "@/model/assessment-model";
 import { Module } from "@/model/module-model";
 import { Report } from "@/model/report-model";
+import dbConnect from "@/service/mongo";
 import mongoose from "mongoose";
 import { getCourseDetails } from "./courses";
 
 export async function getAReport(filter) {
+    await dbConnect();
+    
     try {
         const report = await Report.findOne(filter)
             .populate({
@@ -21,6 +24,8 @@ export async function getAReport(filter) {
 }
 
 export async function createWatchReport(data) {
+    await dbConnect();
+
     try {
         let report = await Report.findOne({
             course: data.courseId,
@@ -84,5 +89,23 @@ export async function createWatchReport(data) {
         report.save();
     } catch (error) {
         throw new Error(error);
+    }
+}
+
+export async function createAssessmentReport(data) {
+    await dbConnect();
+
+    try {
+      let report = await Report.findOne({course: data.courseId, student: data.userId});
+      if (!report) {
+        report = await Report.create({course: data.courseId, student: data.userId, quizAssessment: data.quizAssessment});
+      } else {
+        if (!report.quizAssessment) {
+          report.quizAssessment = data.quizAssessment;
+          report.save();
+        }
+      }
+    } catch(error) {
+      throw new Error(error);
     }
 }
