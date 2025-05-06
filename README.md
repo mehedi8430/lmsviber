@@ -1,6 +1,6 @@
-# Edutech Online
+# LMS Viber
 
-Edutech Online is a modern Learning Management System (LMS) built with **Next.js**. It provides an intuitive platform for educators to create, manage, and deliver courses while offering a seamless learning experience for students. This project is tailored for online education, featuring dashboards, course management, and advanced file handling capabilities.
+LMS Viber is a modern Learning Management System (LMS) built with **Next.js**. It provides an intuitive platform for educators to create, manage, and deliver courses while offering a seamless learning experience for students. This project is tailored for online education, featuring dashboards, course management, and advanced file handling capabilities.
 
 ---
 
@@ -33,8 +33,10 @@ Edutech Online is a modern Learning Management System (LMS) built with **Next.js
 - **Authentication**: Next-auth
 - **Database**: MongoDB
 - **Other Tools**:
-  - React Hook Form
+  - React Hook Form, Zod
   - react-beautiful-dnd for drag-and-drop functionality
+  - react-player for vidoe upload
+  - stripe for payment integration
 
 ---
 
@@ -45,8 +47,8 @@ Edutech Online is a modern Learning Management System (LMS) built with **Next.js
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/mehedi8430/edutechonline.git
-   cd edutech-online
+   git clone https://github.com/mehedi8430/lmsviber.git
+   cd lmsviber
    ```
 
    2. Clone the repository:
@@ -66,6 +68,7 @@ Edutech Online is a modern Learning Management System (LMS) built with **Next.js
 ### Contact
 
 Developer: Mehedi Hasan
+
 Portfolio: [mehedihasan.dev](https://mehedihasanrakib.vercel.app/)
 Email: mehedialhasan1999@gmail.com
-Live Link: [edutechonline](https://edutechonline.vercel.app/)
+Live Link: [lmsviber](https://lmsviber.vercel.app/)
