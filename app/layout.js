@@ -21,7 +21,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={cn(inter.className, poppins.className)}>
-        <div className="bg-[linear-gradient(to_right,_rgba(144,137,252,0.2),_rgba(255,128,181,0.1))]">
+        <div className="min-h-screen bg-[linear-gradient(to_right,_rgba(144,137,252,0.2),_rgba(255,128,181,0.1))]">
           {children}
         </div>
         <Toaster richColors position="top-center"/>
